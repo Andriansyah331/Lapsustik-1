@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sejarah — Lapas Narkotika Jakarta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #0d1b3e;
+      --navy-mid:    #162248;
+      --navy-light:  #1e2f5e;
+      --navy-card:   #111d3a;
+      --gold:        #d4a017;
+      --gold-light:  #f5c800;
+      --gold-muted:  rgba(212,160,23,0.13);
+      --gold-border: rgba(212,160,23,0.28);
+      --white:       #f0ede4;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV — sama persis */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 3.5rem;
+      background: rgba(13,27,62,0.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; filter: drop-shadow(0 0 8px rgba(212,160,23,0.5)); }
+    .nav-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); line-height: 1.35; }
+    .nav-title span { color: var(--gold-light); display: block; }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
+    nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
+    nav ul a:hover, nav ul a.active { opacity: 1; color: var(--gold-light); }
+    .nav-dropdown { position: relative; }
+    .nav-drop-btn { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 1; color: var(--gold-light); background: none; border: none; padding: 0.4rem 0; font-family: inherit; transition: opacity 0.2s, color 0.2s; }
+    .nav-drop-arrow { font-size: 0.55rem; transition: transform 0.25s; display: inline-block; }
+    .nav-dropdown:hover .nav-drop-arrow { transform: rotate(180deg); }
+    .nav-drop-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); padding-top: 14px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.2s, visibility 0.2s; z-index: 200; }
+    .nav-dropdown:hover .nav-drop-menu { opacity: 1; visibility: visible; pointer-events: all; }
+    .nav-drop-menu-inner { background: rgba(13,27,62,0.98); backdrop-filter: blur(20px); border: 1px solid var(--gold-border); min-width: 210px; position: relative; }
+    .nav-drop-menu-inner::before { content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: var(--gold); clip-path: polygon(50% 0%, 100% 100%, 0 100%); }
+    .drop-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; cursor: pointer; border-bottom: 1px solid rgba(212,160,23,0.08); transition: background 0.18s; text-decoration: none; }
+    .drop-item:last-child { border-bottom: none; }
+    .drop-item:hover, .drop-item.active-page { background: var(--gold-muted); }
+    .drop-item-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .drop-item-text { font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.82; color: var(--white); }
+    .drop-item:hover .drop-item-text, .drop-item.active-page .drop-item-text { opacity: 1; color: var(--gold-light); }
+
+    /* PAGE HERO */
+    .page-hero {
+      min-height: 52vh;
+      display: flex; align-items: flex-end;
+      padding: 0 3.5rem 4rem;
+      padding-top: 100px;
+      position: relative; overflow: hidden;
+      background: var(--navy-mid);
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 100% 50%, rgba(212,160,23,0.07), transparent 60%),
+        radial-gradient(ellipse 40% 60% at 0% 100%, rgba(30,47,94,0.6), transparent 60%);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: repeating-linear-gradient(90deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px);
+    }
+    /* Big watermark text */
+    .page-hero-watermark {
+      position: absolute; right: -2rem; bottom: -2rem; z-index: 0;
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(8rem, 18vw, 16rem);
+      color: rgba(212,160,23,0.05); line-height: 1; pointer-events: none; user-select: none;
+      white-space: nowrap;
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.14em; color: var(--gold); opacity: 0.65;
+      text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .breadcrumb a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
+    .breadcrumb a:hover { opacity: 1; }
+    .breadcrumb span { opacity: 0.45; }
+    .page-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
+    .page-tag::before { content:''; width:22px; height:1px; background:var(--gold); }
+    .page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.92; letter-spacing: 0.02em; }
+    .page-hero h1 em { font-style: normal; color: var(--gold-light); }
+    .page-hero-sub { margin-top: 1.2rem; font-size: 0.98rem; opacity: 0.55; max-width: 520px; line-height: 1.7; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 3.5rem; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2.5rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), transparent); }
+    .timeline-item { position: relative; margin-bottom: 3.5rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -2.5rem; top: 0.4rem;
+      width: 14px; height: 14px;
+      background: var(--navy); border: 2px solid var(--gold); border-radius: 50%;
+      transform: translateX(-6px);
+    }
+    .timeline-dot::after { content: ''; position: absolute; inset: 3px; background: var(--gold); border-radius: 50%; }
+    .timeline-year { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.5rem; }
+    .timeline-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; margin-bottom: 0.7rem; line-height: 1; }
+    .timeline-body { font-size: 0.95rem; line-height: 1.8; opacity: 0.7; }
+    .timeline-body strong { color: var(--gold-light); opacity: 1; font-weight: 600; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 4rem 0; }
+    .stat-block { background: var(--navy-card); padding: 2rem; text-align: center; border-top: 3px solid var(--gold); }
+    .stat-block-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--gold-light); line-height: 1; }
+    .stat-block-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; opacity: 0.45; text-transform: uppercase; margin-top: 0.4rem; }
+
+    /* INFO GRID */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 4rem; }
+    .info-block { background: var(--navy-card); border-left: 3px solid var(--gold); padding: 1.4rem 1.6rem; }
+    .info-block-label { font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.18em; color:var(--gold); text-transform:uppercase; margin-bottom:0.4rem; }
+    .info-block-value { font-size:0.9rem; line-height:1.5; opacity:0.82; }
+
+    /* SECTION DIVIDER */
+    .section-divider { width:100%; height:1px; background: linear-gradient(90deg, var(--gold) 0%, transparent 55%); margin: 0.5rem 0 3rem; }
+    .section-head { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .section-head em { font-style: normal; color: var(--gold-light); }
+    .section-tag-inline { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
+    .section-tag-inline::before { content:''; width:22px; height:1px; background:var(--gold); }
+
+    /* FOOTER */
+    footer { background:var(--navy-card); border-top:1px solid var(--gold-border); padding:2.5rem 3.5rem; }
+    .footer-inner { display:flex; align-items:center; justify-content:space-between; }
+    .footer-left-logo { display:flex; align-items:center; gap:1rem; }
+    .footer-left-logo img { width:40px; height:40px; border-radius:50%; opacity:0.85; filter:drop-shadow(0 0 4px rgba(212,160,23,0.3)); }
+    .footer-text { font-size:0.76rem; opacity:0.4; line-height:1.65; }
+    .footer-text strong { color:var(--gold-light); opacity:0.9; font-size:0.82rem; display:block; }
+    .footer-links { display:flex; gap:2rem; }
+    .footer-links a { text-decoration:none; color:var(--white); opacity:0.38; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; transition:opacity 0.2s, color 0.2s; }
+    .footer-links a:hover { opacity:1; color:var(--gold); }
+    .footer-bottom { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(212,160,23,0.1); text-align:center; font-size:0.68rem; opacity:0.3; letter-spacing:0.08em; font-family:'Space Mono',monospace; }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width: 960px) {
+      nav { padding:1rem 1.5rem; }
+      nav ul { gap:1.2rem; }
+      .page-hero { padding:6rem 1.5rem 3rem; }
+      .content-wrap { padding:3rem 1.5rem; }
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .info-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction:column; gap:1.5rem; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="image/logo.png" alt="Logo" />
+    <div class="nav-title">Lembaga Pemasyarakatan<span>Narkotika Jakarta</span></div>
+  </a>
+  <ul>
+    <li class="nav-dropdown">
+      <button class="nav-drop-btn">Profil <span class="nav-drop-arrow">▼</span></button>
+      <div class="nav-drop-menu">
+        <div class="nav-drop-menu-inner">
+          <a class="drop-item active-page" href="sejarah.html">
+            <div class="drop-item-icon">🏛️</div>
+            <div class="drop-item-text">Sejarah</div>
+          </a>
+          <a class="drop-item" href="visimisi.html">
+            <div class="drop-item-icon">🎯</div>
+            <div class="drop-item-text">Visi & Misi</div>
+          </a>
+          <a class="drop-item" href="struktur.html">
+            <div class="drop-item-icon">🏢</div>
+            <div class="drop-item-text">Struktur Organisasi</div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li><a href="program.html">Program</a></li>
+    <li><a href="fasilitas.html">Fasilitas</a></li>
+    <li><a href="berita.html">Berita</a></li>
+    <li><a href="index.html#kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Beranda</a>
+      <span>›</span>
+      <span>Profil</span>
+      <span>›</span>
+      <span style="color:var(--white);opacity:0.85;">Sejarah</span>
+    </div>
+    <div class="page-tag">Profil Institusi</div>
+    <h1>Sejarah <em>Lapas</em></h1>
+    <p class="page-hero-sub">Perjalanan panjang Lembaga Pemasyarakatan Narkotika Kelas IIA Jakarta sejak berdiri hingga menjadi pusat rehabilitasi terkemuka di wilayah DKI Jakarta.</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- STATS -->
+  <div class="stats-row reveal">
+    <div class="stat-block"><div class="stat-block-num">2003</div><div class="stat-block-label">Tahun Berdiri</div></div>
+    <div class="stat-block"><div class="stat-block-num">27.213</div><div class="stat-block-label">Luas Lahan (m²)</div></div>
+    <div class="stat-block"><div class="stat-block-num">1.064</div><div class="stat-block-label">Kapasitas Hunian</div></div>
+    <div class="stat-block"><div class="stat-block-num">IIA</div><div class="stat-block-label">Kelas Lapas</div></div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div style="margin-bottom:2rem;" class="reveal">
+    <div class="section-tag-inline">Linimasa</div>
+    <div class="section-head">Perjalanan <em>Institusi</em></div>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">Latar Belakang</div>
+      <div class="timeline-title">Awal Mula — Bagian dari Lapas Cipinang</div>
+      <div class="timeline-body">
+        <strong>Lapas Narkotika Kelas IIA Jakarta</strong> pada awalnya merupakan bagian dari Lembaga Pemasyarakatan Kelas I Cipinang. Meningkatnya jumlah narapidana kasus narkotika mendorong pemerintah untuk mengembangkan satuan khusus yang dapat memberikan penanganan rehabilitatif yang lebih terarah dan spesifik.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">2003 — Dasar Hukum Pembentukan</div>
+      <div class="timeline-title">Keputusan Menteri Kehakiman dan HAM</div>
+      <div class="timeline-body">
+        Pendirian lembaga ini didasarkan pada <strong>Keputusan Menteri Kehakiman dan Hak Asasi Manusia Republik Indonesia Nomor M.04.PR.07.03 Tahun 2003</strong> tentang Pembentukan Lembaga Pemasyarakatan Narkotika di beberapa wilayah strategis Indonesia. Wilayah-wilayah tersebut antara lain: Pematang Siantar, Lubuk Linggau, Bandar Lampung, <strong>Jakarta</strong>, Bandung, Nusakambangan, Madiun, Pamekasan, Martapura, Bangli, Maros, dan Jayapura.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">30 Oktober 2003 — Peresmian</div>
+      <div class="timeline-title">Diresmikan Presiden Megawati Soekarnoputri</div>
+      <div class="timeline-body">
+        Lapas Narkotika Kelas IIA Jakarta secara resmi diresmikan oleh <strong>Presiden Republik Indonesia, Megawati Soekarnoputri</strong>, pada tanggal 30 Oktober 2003. Lapas ini dibangun di atas lahan seluas <strong>27.213,72 m²</strong> dengan kapasitas hunian sebanyak <strong>1.064 orang</strong>. Bangunan dirancang dengan tingkat keamanan maksimum untuk memastikan keselamatan dan ketertiban seluruh warga binaan.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">Pengembangan Berkelanjutan</div>
+      <div class="timeline-title">Penguatan Program Rehabilitasi</div>
+      <div class="timeline-body">
+        Sejak peresmiannya, Lapas Narkotika Jakarta terus berkembang dengan memperkuat program rehabilitasi medis dan sosial bagi warga binaan. Berbagai kerja sama dibangun bersama instansi seperti BNN, Kementerian Kesehatan, dan lembaga internasional untuk meningkatkan standar layanan pemasyarakatan berbasis rehabilitasi.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">Saat Ini</div>
+      <div class="timeline-title">Pusat Rehabilitasi Terkemuka di DKI Jakarta</div>
+      <div class="timeline-body">
+        Kini, <strong>Lapas Narkotika Kelas IIA Jakarta</strong> telah menjadi salah satu pusat rehabilitasi, pembinaan, dan reintegrasi sosial terdepan di DKI Jakarta. Berada di bawah naungan <strong>Kementerian Imigrasi dan Pemasyarakatan Republik Indonesia</strong>, lapas ini terus berinovasi dalam layanan pemasyarakatan yang manusiawi dan berbasis bukti ilmiah.
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO DETAIL -->
+  <div style="margin-top:5rem;" class="reveal">
+    <div class="section-tag-inline">Identitas Institusi</div>
+    <div class="section-head">Data <em>Kelembagaan</em></div>
+    <div class="section-divider"></div>
+    <div class="info-grid">
+      <div class="info-block"><div class="info-block-label">Nama Resmi</div><div class="info-block-value">Lapas Narkotika Kelas IIA Jakarta</div></div>
+      <div class="info-block"><div class="info-block-label">Tanggal Peresmian</div><div class="info-block-value">30 Oktober 2003</div></div>
+      <div class="info-block"><div class="info-block-label">Dasar Hukum</div><div class="info-block-value">Keputusan Menkeh & HAM RI No. M.04.PR.07.03 Tahun 2003</div></div>
+      <div class="info-block"><div class="info-block-label">Diresmikan Oleh</div><div class="info-block-value">Presiden RI Megawati Soekarnoputri</div></div>
+      <div class="info-block"><div class="info-block-label">Instansi Induk</div><div class="info-block-value">Kementerian Imigrasi dan Pemasyarakatan RI</div></div>
+      <div class="info-block"><div class="info-block-label">Direktorat</div><div class="info-block-value">Direktorat Jenderal Pemasyarakatan</div></div>
+      <div class="info-block"><div class="info-block-label">Klasifikasi</div><div class="info-block-value">Kelas IIA — Khusus Narkotika</div></div>
+      <div class="info-block"><div class="info-block-label">Lokasi</div><div class="info-block-value">Jl. Bekasi Tim. Raya No.170A, Cipinang Besar Utara, Jakarta Timur 13410</div></div>
+      <div class="info-block"><div class="info-block-label">Luas Lahan</div><div class="info-block-value">27.213,72 m²</div></div>
+      <div class="info-block"><div class="info-block-label">Kapasitas Hunian</div><div class="info-block-value">1.064 orang</div></div>
+      <div class="info-block"><div class="info-block-label">Tingkat Keamanan</div><div class="info-block-value">Maksimum</div></div>
+      <div class="info-block"><div class="info-block-label">Wilayah Kerja</div><div class="info-block-value">DKI Jakarta & Sekitarnya</div></div>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left-logo">
+      <img src="image/logo.png" alt="Logo" />
+      <div class="footer-text">
+        <strong>Lapas Narkotika Kelas IIA Jakarta</strong>
+        Kementerian Imigrasi dan Pemasyarakatan RI<br>
+        Melayani dengan Integritas · Membina dengan Kemanusiaan
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Kemenkumham</a>
+      <a href="#">Ditjen PAS</a>
+      <a href="#">PPID</a>
+      <a href="#">Pengaduan</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Fasum & BMN — Semua Hak Dilindungi</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
+  },{threshold:0.08});
+  reveals.forEach(r=>io.observe(r));
+</script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visi & Misi — Lapas Narkotika Jakarta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #0d1b3e;
+      --navy-mid:    #162248;
+      --navy-light:  #1e2f5e;
+      --navy-card:   #111d3a;
+      --gold:        #d4a017;
+      --gold-light:  #f5c800;
+      --gold-muted:  rgba(212,160,23,0.13);
+      --gold-border: rgba(212,160,23,0.28);
+      --white:       #f0ede4;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 3.5rem;
+      background: rgba(13,27,62,0.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; filter: drop-shadow(0 0 8px rgba(212,160,23,0.5)); }
+    .nav-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); line-height: 1.35; }
+    .nav-title span { color: var(--gold-light); display: block; }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
+    nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
+    nav ul a:hover { opacity: 1; color: var(--gold-light); }
+    .nav-dropdown { position: relative; }
+    .nav-drop-btn { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; text-decoration: none; color: var(--gold-light); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 1; background: none; border: none; padding: 0.4rem 0; font-family: inherit; transition: opacity 0.2s; }
+    .nav-drop-arrow { font-size: 0.55rem; transition: transform 0.25s; display: inline-block; }
+    .nav-dropdown:hover .nav-drop-arrow { transform: rotate(180deg); }
+    .nav-drop-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); padding-top: 14px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.2s, visibility 0.2s; z-index: 200; }
+    .nav-dropdown:hover .nav-drop-menu { opacity: 1; visibility: visible; pointer-events: all; }
+    .nav-drop-menu-inner { background: rgba(13,27,62,0.98); backdrop-filter: blur(20px); border: 1px solid var(--gold-border); min-width: 210px; position: relative; }
+    .nav-drop-menu-inner::before { content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: var(--gold); clip-path: polygon(50% 0%, 100% 100%, 0 100%); }
+    .drop-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; cursor: pointer; border-bottom: 1px solid rgba(212,160,23,0.08); transition: background 0.18s; text-decoration: none; }
+    .drop-item:last-child { border-bottom: none; }
+    .drop-item:hover, .drop-item.active-page { background: var(--gold-muted); }
+    .drop-item-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .drop-item-text { font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.82; color: var(--white); }
+    .drop-item:hover .drop-item-text, .drop-item.active-page .drop-item-text { opacity: 1; color: var(--gold-light); }
+
+    /* PAGE HERO */
+    .page-hero {
+      min-height: 52vh; display: flex; align-items: flex-end;
+      padding: 0 3.5rem 4rem; padding-top: 100px;
+      position: relative; overflow: hidden;
+      background: var(--navy-mid);
+    }
+    .page-hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 80% at 100% 50%, rgba(212,160,23,0.07), transparent 60%), radial-gradient(ellipse 40% 60% at 0% 100%, rgba(30,47,94,0.6), transparent 60%); }
+    .page-hero-grid { position: absolute; inset: 0; z-index: 0; background-image: repeating-linear-gradient(90deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px); }
+    .page-hero-watermark { position: absolute; right: -2rem; bottom: -2rem; z-index: 0; font-family: 'Bebas Neue', sans-serif; font-size: clamp(8rem, 18vw, 16rem); color: rgba(212,160,23,0.05); line-height: 1; pointer-events: none; user-select: none; white-space: nowrap; }
+    .page-hero-content { position: relative; z-index: 1; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.65; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .breadcrumb a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
+    .breadcrumb a:hover { opacity: 1; }
+    .breadcrumb span { opacity: 0.45; }
+    .page-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
+    .page-tag::before { content:''; width:22px; height:1px; background:var(--gold); }
+    .page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.92; letter-spacing: 0.02em; }
+    .page-hero h1 em { font-style: normal; color: var(--gold-light); }
+    .page-hero-sub { margin-top: 1.2rem; font-size: 0.98rem; opacity: 0.55; max-width: 520px; line-height: 1.7; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 3.5rem; }
+
+    /* VISI CARD — besar & statement */
+    .visi-card {
+      background: var(--navy-card);
+      border-top: 4px solid var(--gold);
+      padding: 3.5rem 4rem;
+      position: relative; overflow: hidden;
+      margin-bottom: 1px;
+    }
+    .visi-card::before { content: '01'; position: absolute; right: 2rem; top: 1rem; font-family: 'Bebas Neue', sans-serif; font-size: 8rem; color: rgba(212,160,23,0.06); line-height: 1; }
+    .visi-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .visi-label::before { content:''; width:18px; height:1px; background:var(--gold); }
+    .visi-quote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      line-height: 1.1; letter-spacing: 0.03em;
+      color: var(--white);
+      max-width: 800px;
+    }
+    .visi-quote em { font-style: normal; color: var(--gold-light); }
+
+    /* MISI CARDS */
+    .misi-header { background: var(--navy-mid); padding: 2.8rem 4rem; border-top: 4px solid var(--gold); position: relative; overflow: hidden; margin-bottom: 1px; }
+    .misi-header::before { content: '02'; position: absolute; right: 2rem; top: 1rem; font-family: 'Bebas Neue', sans-serif; font-size: 8rem; color: rgba(212,160,23,0.06); line-height: 1; }
+    .misi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+    .misi-card {
+      background: var(--navy-card);
+      padding: 2rem 2.2rem;
+      display: flex; align-items: flex-start; gap: 1.4rem;
+      transition: background 0.2s;
+    }
+    .misi-card:hover { background: var(--navy-light); }
+    .misi-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: rgba(212,160,23,0.15); line-height: 1; flex-shrink: 0; width: 52px; text-align: center; padding-top: 2px; }
+    .misi-content {}
+    .misi-arrow { color: var(--gold); font-family: 'Space Mono', monospace; font-size: 1.2rem; margin-bottom: 0.6rem; display: block; }
+    .misi-text { font-size: 0.95rem; line-height: 1.75; opacity: 0.72; }
+
+    /* NILAI-NILAI */
+    .nilai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 4rem; }
+    .nilai-card { background: var(--navy-card); padding: 2rem 1.8rem; text-align: center; border-bottom: 3px solid transparent; transition: border-color 0.25s, background 0.2s; }
+    .nilai-card:hover { border-color: var(--gold); background: var(--navy-light); }
+    .nilai-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .nilai-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.06em; color: var(--gold-light); margin-bottom: 0.6rem; }
+    .nilai-desc { font-size: 0.82rem; opacity: 0.55; line-height: 1.6; }
+
+    .section-divider { width:100%; height:1px; background: linear-gradient(90deg, var(--gold) 0%, transparent 55%); margin: 0.5rem 0 3rem; }
+    .section-head { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .section-head em { font-style: normal; color: var(--gold-light); }
+    .section-tag-inline { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
+    .section-tag-inline::before { content:''; width:22px; height:1px; background:var(--gold); }
+
+    footer { background:var(--navy-card); border-top:1px solid var(--gold-border); padding:2.5rem 3.5rem; }
+    .footer-inner { display:flex; align-items:center; justify-content:space-between; }
+    .footer-left-logo { display:flex; align-items:center; gap:1rem; }
+    .footer-left-logo img { width:40px; height:40px; border-radius:50%; opacity:0.85; filter:drop-shadow(0 0 4px rgba(212,160,23,0.3)); }
+    .footer-text { font-size:0.76rem; opacity:0.4; line-height:1.65; }
+    .footer-text strong { color:var(--gold-light); opacity:0.9; font-size:0.82rem; display:block; }
+    .footer-links { display:flex; gap:2rem; }
+    .footer-links a { text-decoration:none; color:var(--white); opacity:0.38; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; transition:opacity 0.2s, color 0.2s; }
+    .footer-links a:hover { opacity:1; color:var(--gold); }
+    .footer-bottom { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(212,160,23,0.1); text-align:center; font-size:0.68rem; opacity:0.3; letter-spacing:0.08em; font-family:'Space Mono',monospace; }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width: 960px) {
+      nav { padding:1rem 1.5rem; }
+      nav ul { gap:1.2rem; }
+      .page-hero { padding:6rem 1.5rem 3rem; }
+      .content-wrap { padding:3rem 1.5rem; }
+      .visi-card, .misi-header { padding:2.2rem 1.8rem; }
+      .misi-grid { grid-template-columns: 1fr; }
+      .nilai-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { flex-direction:column; gap:1.5rem; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="image/logo.png" alt="Logo" />
+    <div class="nav-title">Lembaga Pemasyarakatan<span>Narkotika Jakarta</span></div>
+  </a>
+  <ul>
+    <li class="nav-dropdown">
+      <button class="nav-drop-btn">Profil <span class="nav-drop-arrow">▼</span></button>
+      <div class="nav-drop-menu">
+        <div class="nav-drop-menu-inner">
+          <a class="drop-item" href="sejarah.html">
+            <div class="drop-item-icon">🏛️</div>
+            <div class="drop-item-text">Sejarah</div>
+          </a>
+          <a class="drop-item active-page" href="visimisi.html">
+            <div class="drop-item-icon">🎯</div>
+            <div class="drop-item-text">Visi & Misi</div>
+          </a>
+           <div class="nav-drop-menu-inner">
+          <a class="drop-item" href="struktur.html">
+            <div class="drop-item-icon">🏢</div>
+            <div class="drop-item-text">Struktur Organisasi</div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li><a href="program.html">Program</a></li>
+    <li><a href="fasilitas.html">Fasilitas</a></li>
+    <li><a href="berita.html">Berita</a></li>
+    <li><a href="index.html#kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Beranda</a>
+      <span>›</span>
+      <span>Profil</span>
+      <span>›</span>
+      <span style="color:var(--white);opacity:0.85;">Visi & Misi</span>
+    </div>
+    <div class="page-tag">Landasan Institusi</div>
+    <h1>Visi & <em>Misi</em></h1>
+    <p class="page-hero-sub">Landasan arah dan tujuan Lapas Narkotika Kelas IIA Jakarta dalam memberikan pelayanan pemasyarakatan yang akuntabel, transparan, dan manusiawi.</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- VISI -->
+  <div class="reveal">
+    <div class="visi-card">
+      <div class="visi-label">01 — Visi</div>
+      <div class="visi-quote">
+        Memberikan Pelayanan Yang <em>Akuntabel</em> dan <em>Transparan</em> Serta Mampu Mewujudkan <em>Tertib Pemasyarakatan</em>
+      </div>
+    </div>
+
+    <!-- MISI -->
+    <div class="misi-header">
+      <div class="visi-label">02 — Misi</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.04em;opacity:0.85;">Empat Pilar Pelayanan</div>
+    </div>
+    <div class="misi-grid">
+      <div class="misi-card">
+        <div class="misi-num">1</div>
+        <div class="misi-content">
+          <span class="misi-arrow">→</span>
+          <div class="misi-text">Memberikan kemudahan pelayanan bagi masyarakat secara <strong style="color:var(--gold-light);font-weight:600;">tepat dan efektif</strong></div>
+        </div>
+      </div>
+      <div class="misi-card">
+        <div class="misi-num">2</div>
+        <div class="misi-content">
+          <span class="misi-arrow">→</span>
+          <div class="misi-text">Menghilangkan <strong style="color:var(--gold-light);font-weight:600;">komersialisasi dan diskriminasi</strong> dalam pelayanan</div>
+        </div>
+      </div>
+      <div class="misi-card">
+        <div class="misi-num">3</div>
+        <div class="misi-content">
+          <span class="misi-arrow">→</span>
+          <div class="misi-text">Menyediakan prosedur layanan tentang <strong style="color:var(--gold-light);font-weight:600;">hak-hak warga binaan pemasyarakatan</strong></div>
+        </div>
+      </div>
+      <div class="misi-card">
+        <div class="misi-num">4</div>
+        <div class="misi-content">
+          <span class="misi-arrow">→</span>
+          <div class="misi-text">Mengedepankan <strong style="color:var(--gold-light);font-weight:600;">profesionalisme dan keterbukaan</strong> memberikan pelayanan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NILAI-NILAI -->
+  <div style="margin-top:5rem;" class="reveal">
+    <div class="section-tag-inline">Nilai Utama</div>
+    <div class="section-head">Nilai-Nilai <em>Pelayanan</em></div>
+    <div class="section-divider"></div>
+    <div class="nilai-grid">
+      <div class="nilai-card">
+        <div class="nilai-icon">⚖️</div>
+        <div class="nilai-title">Akuntabilitas</div>
+        <div class="nilai-desc">Setiap tindakan dan keputusan dapat dipertanggungjawabkan kepada masyarakat dan pemangku kepentingan</div>
+      </div>
+      <div class="nilai-card">
+        <div class="nilai-icon">🔍</div>
+        <div class="nilai-title">Transparansi</div>
+        <div class="nilai-desc">Keterbukaan informasi dan proses pelayanan kepada seluruh pihak yang berkepentingan secara konsisten</div>
+      </div>
+      <div class="nilai-card">
+        <div class="nilai-icon">🤲</div>
+        <div class="nilai-title">Kemanusiaan</div>
+        <div class="nilai-desc">Menempatkan martabat warga binaan sebagai manusia yang berhak mendapatkan perlakuan yang adil dan bermartabat</div>
+      </div>
+      <div class="nilai-card">
+        <div class="nilai-icon">🏆</div>
+        <div class="nilai-title">Profesionalisme</div>
+        <div class="nilai-desc">Pelayanan yang dijalankan oleh SDM terlatih dengan standar kompetensi dan etika yang tinggi</div>
+      </div>
+      <div class="nilai-card">
+        <div class="nilai-icon">🛡️</div>
+        <div class="nilai-title">Integritas</div>
+        <div class="nilai-desc">Konsistensi antara ucapan, tindakan, dan nilai-nilai institusi dalam setiap aspek pelayanan</div>
+      </div>
+      <div class="nilai-card">
+        <div class="nilai-icon">🌱</div>
+        <div class="nilai-title">Rehabilitatif</div>
+        <div class="nilai-desc">Pendekatan yang berorientasi pada pemulihan dan pemberdayaan warga binaan untuk kembali ke masyarakat</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left-logo">
+      <img src="image/logo.png" alt="Logo" />
+      <div class="footer-text">
+        <strong>Lapas Narkotika Kelas IIA Jakarta</strong>
+        Kementerian Imigrasi dan Pemasyarakatan RI<br>
+        Melayani dengan Integritas · Membina dengan Kemanusiaan
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Kemenkumham</a>
+      <a href="#">Ditjen PAS</a>
+      <a href="#">PPID</a>
+      <a href="#">Pengaduan</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Fasum & BMN — Semua Hak Dilindungi</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
+  },{threshold:0.08});
+  reveals.forEach(r=>io.observe(r));
+</script>
+</body>
+</html>
