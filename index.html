@@ -21,6 +21,7 @@
     html { scroll-behavior: smooth; }
     body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
 
+    /* ===== NAVBAR ===== */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -28,7 +29,7 @@
       background: rgba(13,27,62,0.96); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--gold-border);
     }
-    .nav-logo { display: flex; align-items: center; gap: 1rem; }
+    .nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
     .nav-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; filter: drop-shadow(0 0 8px rgba(212,160,23,0.5)); }
     .nav-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); line-height: 1.35; }
     .nav-title span { color: var(--gold-light); display: block; }
@@ -36,69 +37,72 @@
     nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
     nav ul a:hover { opacity: 1; color: var(--gold-light); }
 
-    .nav-dropdown { position: relative; }
-    .nav-drop-btn {
-      display: flex; align-items: center; gap: 0.4rem; cursor: pointer;
-      text-decoration: none; color: var(--white);
-      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-      font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s;
-      background: none; border: none; padding: 0.4rem 0; font-family: inherit;
+    /* Hamburger — same pattern as sejarah.html */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px; width: 36px; height: 36px; cursor: pointer;
+      background: none; border: none; padding: 4px;
     }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--gold-light); border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer — same pattern as sejarah.html */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99;
+      background: rgba(13,27,62,0.98);
+      padding: 5.5rem 2rem 2rem;
+      flex-direction: column; gap: 0;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      display: block; padding: 1rem 0;
+      text-decoration: none; color: var(--white);
+      font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400;
+      border-bottom: 1px solid rgba(212,160,23,0.1);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a.active-page { color: var(--gold-light); }
+    .mobile-menu .mobile-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.7;
+      text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.3rem;
+    }
+    .mobile-menu a.sub { padding-left: 1rem; font-size: 0.95rem; opacity: 0.8; }
+
+    /* Dropdown desktop */
+    .nav-dropdown { position: relative; }
+    .nav-drop-btn { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; background: none; border: none; padding: 0.4rem 0; font-family: inherit; transition: opacity 0.2s, color 0.2s; }
     .nav-dropdown:hover .nav-drop-btn { opacity: 1; color: var(--gold-light); }
     .nav-drop-arrow { font-size: 0.55rem; transition: transform 0.25s; display: inline-block; }
     .nav-dropdown:hover .nav-drop-arrow { transform: rotate(180deg); }
-    .nav-drop-menu {
-      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-      padding-top: 14px; opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.2s, visibility 0.2s; z-index: 200;
-    }
+    .nav-drop-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); padding-top: 14px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.2s, visibility 0.2s; z-index: 200; }
     .nav-dropdown:hover .nav-drop-menu { opacity: 1; visibility: visible; pointer-events: all; }
-    .nav-drop-menu-inner {
-      background: rgba(13,27,62,0.98); backdrop-filter: blur(20px);
-      border: 1px solid var(--gold-border); min-width: 210px; position: relative;
-    }
-    .nav-drop-menu-inner::before {
-      content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
-      width: 8px; height: 8px; background: var(--gold); clip-path: polygon(50% 0%, 100% 100%, 0 100%);
-    }
-    .drop-item {
-      display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; cursor: pointer;
-      border-bottom: 1px solid rgba(212,160,23,0.08); transition: background 0.18s;
-      text-decoration: none;
-    }
+    .nav-drop-menu-inner { background: rgba(13,27,62,0.98); backdrop-filter: blur(20px); border: 1px solid var(--gold-border); min-width: 210px; position: relative; }
+    .nav-drop-menu-inner::before { content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: var(--gold); clip-path: polygon(50% 0%, 100% 100%, 0 100%); }
+    .drop-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; cursor: pointer; border-bottom: 1px solid rgba(212,160,23,0.08); transition: background 0.18s; text-decoration: none; }
     .drop-item:last-child { border-bottom: none; }
     .drop-item:hover { background: var(--gold-muted); }
     .drop-item-icon { font-size: 1.1rem; flex-shrink: 0; }
     .drop-item-text { font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.82; color: var(--white); }
     .drop-item:hover .drop-item-text { opacity: 1; color: var(--gold-light); }
 
-    /* MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 500; background: rgba(8,16,36,0.88);
-      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.3s, visibility 0.3s; padding: 2rem;
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 0 3.5rem; padding-top: 80px;
+      position: relative; overflow: hidden;
     }
-    .modal-overlay.open { opacity: 1; visibility: visible; pointer-events: all; }
-    .modal {
-      background: var(--navy-card); border: 1px solid var(--gold-border);
-      max-width: 820px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
-      transform: translateY(20px) scale(0.97); transition: transform 0.3s;
-    }
-    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
-    .modal-img-placeholder { width: 100%; height: 260px; display: flex; align-items: center; justify-content: center; border-bottom: 3px solid var(--gold); position: relative; overflow: hidden; }
-    .modal-body { padding: 2.2rem 2.5rem; }
-    .modal-tag { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.6rem; }
-    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; letter-spacing: 0.03em; line-height: 1; margin-bottom: 1.4rem; }
-    .modal-desc { font-size: 0.95rem; line-height: 1.85; opacity: 0.72; margin-bottom: 1.8rem; }
-    .modal-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 2rem; }
-    .modal-feature { display: flex; align-items: flex-start; gap: 0.7rem; background: var(--navy-mid); padding: 0.85rem 1rem; border-left: 2px solid var(--gold); font-size: 0.82rem; line-height: 1.5; opacity: 0.78; }
-    .modal-feature-icon { flex-shrink: 0; font-size: 1rem; }
-    .modal-close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; background: var(--navy-mid); border: 1px solid var(--gold-border); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--white); opacity: 0.7; transition: opacity 0.2s, background 0.2s; z-index: 10; border-radius: 2px; }
-    .modal-close:hover { opacity: 1; background: var(--gold-muted); }
-
-    /* HERO */
-    #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 3.5rem; padding-top: 80px; position: relative; overflow: hidden; }
     .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 70% at 75% 50%, rgba(212,160,23,0.09), transparent 65%), radial-gradient(ellipse 50% 60% at 10% 80%, rgba(30,47,94,0.7), transparent 70%); }
     .hero-bg-grid { position: absolute; inset: 0; z-index: 0; background-image: repeating-linear-gradient(90deg, rgba(212,160,23,0.035) 0, rgba(212,160,23,0.035) 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, rgba(212,160,23,0.035) 0, rgba(212,160,23,0.035) 1px, transparent 1px, transparent 80px); }
     .hero-content { position: relative; z-index: 1; }
@@ -114,6 +118,10 @@
     .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
     .btn-outline { background: transparent; color: var(--white); padding: 0.85rem 2rem; border: 1px solid rgba(240,237,228,0.2); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
     .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .hero-stats-bar { margin-top: 2.8rem; display: flex; gap: 1px; animation: fadeUp 0.8s 0.55s ease both; }
+    .stat-pill { background: var(--navy-card); border: 1px solid var(--gold-border); padding: 1rem 1.8rem; text-align: center; min-width: 130px; }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--gold-light); line-height: 1; }
+    .stat-label { font-size: 0.58rem; letter-spacing: 0.1em; opacity: 0.45; text-transform: uppercase; margin-top: 0.3rem; font-family: 'Space Mono', monospace; }
     .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; animation: fadeIn 1.2s 0.5s ease both; }
     .logo-showcase { position: relative; width: 360px; height: 360px; display: flex; align-items: center; justify-content: center; }
     .logo-ring-1, .logo-ring-2 { position: absolute; border-radius: 50%; border: 1px solid var(--gold-border); }
@@ -122,13 +130,10 @@
     .logo-ring-2 { inset: -52px; border-style: dashed; opacity: 0.22; animation: rotateSlow 50s linear infinite reverse; }
     @keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     .logo-img { width: 280px; height: 280px; border-radius: 50%; object-fit: cover; filter: drop-shadow(0 0 28px rgba(212,160,23,0.45)) drop-shadow(0 0 60px rgba(212,160,23,0.15)); position: relative; z-index: 2; }
-    .hero-stats-bar { position: absolute; bottom: -3.5rem; left: 0; right: 0; display: flex; justify-content: center; gap: 1px; }
-    .stat-pill { background: var(--navy-card); border: 1px solid var(--gold-border); padding: 1rem 1.8rem; text-align: center; min-width: 130px; }
-    .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--gold-light); line-height:1; }
-    .stat-label { font-size:0.58rem; letter-spacing:0.1em; opacity:0.45; text-transform:uppercase; margin-top:0.3rem; font-family:'Space Mono',monospace; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
+    /* ===== SECTIONS ===== */
     section { padding: 6rem 3.5rem; }
     .section-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
     .section-tag::before { content:''; width:22px; height:1px; background:var(--gold); }
@@ -136,131 +141,173 @@
     h2 em { font-style:normal; color:var(--gold-light); }
     .section-divider { width:100%; height:1px; background: linear-gradient(90deg, var(--gold) 0%, transparent 55%); margin-bottom: 3.5rem; margin-top: 0.5rem; }
 
-    /* PROGRAM GRID — 8 cards, row terakhir centered */
-    #program { background:var(--navy-mid); }
-    .program-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-    }
-    /* Card 7 & 8 di row ke-3: mulai di kolom 1 dan 2 saja (kolom 3 kosong) */
-    .program-card:nth-child(7) { grid-column: 1; }
-    .program-card:nth-child(8) { grid-column: 2; }
+    /* ===== SHORTCUT CARDS ===== */
+    #highlights { background: var(--navy-mid); padding: 5rem 3.5rem; }
+    .shortcut-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; }
+    .shortcut-card { text-decoration: none; background: var(--navy-card); padding: 2.5rem; display: block; border-bottom: 3px solid transparent; transition: border-color 0.2s, background 0.2s; }
+    .shortcut-card:hover { border-color: var(--gold); background: var(--navy-light); }
+    .shortcut-emoji { font-size: 2.5rem; margin-bottom: 1.2rem; }
+    .shortcut-num { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--gold); opacity: 0.6; margin-bottom: 0.5rem; }
+    .shortcut-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; color: var(--white); margin-bottom: 0.7rem; }
+    .shortcut-desc { font-size: 0.85rem; line-height: 1.7; opacity: 0.55; color: var(--white); }
+    .shortcut-more { font-size: 0.62rem; opacity: 0.4; margin-top: 1rem; font-family: 'Space Mono', monospace; letter-spacing: 0.08em; color: var(--gold); }
 
-    .program-card { background:var(--navy-card); padding:2.2rem; position:relative; overflow:hidden; transition:background 0.25s; cursor:pointer; }
-    .program-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
-    .program-card:hover { background:var(--navy-light); }
-    .program-card:hover::after { transform:scaleX(1); }
-    .program-click-hint { font-size:0.62rem; opacity:0.35; margin-top:1rem; font-family:'Space Mono',monospace; letter-spacing:0.08em; transition:opacity 0.2s; }
-    .program-card:hover .program-click-hint { opacity:0.7; color:var(--gold); }
-    .program-icon { width:48px; height:48px; border:1px solid var(--gold-border); background:var(--gold-muted); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1.4rem; }
-    .program-num { font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.15em; color:var(--gold); opacity:0.6; margin-bottom:0.5rem; }
-    .program-title { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.04em; margin-bottom:0.7rem; }
-    .program-desc { font-size:0.85rem; line-height:1.7; opacity:0.58; }
+    /* ===== KONTAK ===== */
+    #kontak { background: var(--navy); }
+    .kontak-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .kontak-info-list { display: flex; flex-direction: column; gap: 2rem; }
+    .kontak-info-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .kontak-info-icon { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--gold-border); background: var(--gold-muted); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .kontak-info-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.3rem; }
+    .kontak-info-value { font-size: 0.9rem; line-height: 1.6; opacity: 0.72; }
+    .kontak-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; color: var(--gold); opacity: 0.7; text-transform: uppercase; }
+    .form-input, .form-textarea { background: var(--navy-card); border: 1px solid rgba(240,237,228,0.08); color: var(--white); padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-input::placeholder, .form-textarea::placeholder { opacity: 0.3; }
 
-    /* Fasilitas 11 item: row terakhir 3 card, kolom 4 kosong */
-    .fasilitas-grid .fasilitas-item:nth-child(9)  { grid-column: 1; }
-    .fasilitas-grid .fasilitas-item:nth-child(10) { grid-column: 2; }
-    .fasilitas-grid .fasilitas-item:nth-child(11) { grid-column: 3; }
+    /* ===== FOOTER ===== */
+    footer { background: var(--navy-card); border-top: 1px solid var(--gold-border); padding: 2.5rem 3.5rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-left-logo { display: flex; align-items: center; gap: 1rem; }
+    .footer-left-logo img { width: 40px; height: 40px; border-radius: 50%; opacity: 0.85; filter: drop-shadow(0 0 4px rgba(212,160,23,0.3)); }
+    .footer-text { font-size: 0.76rem; opacity: 0.4; line-height: 1.65; }
+    .footer-text strong { color: var(--gold-light); opacity: 0.9; font-size: 0.82rem; display: block; }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; color: var(--white); opacity: 0.38; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: opacity 0.2s, color 0.2s; }
+    .footer-links a:hover { opacity: 1; color: var(--gold); }
+    .footer-bottom { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(212,160,23,0.1); text-align: center; font-size: 0.68rem; opacity: 0.3; letter-spacing: 0.08em; font-family: 'Space Mono', monospace; }
 
-    #fasilitas { background:var(--navy); }
-    .fasilitas-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; }
-    .fasilitas-grid-last { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:1px; }
-    .fasilitas-item { background:var(--navy-card); padding:2rem 1.5rem; text-align:center; border-bottom:2px solid transparent; transition:border-color 0.2s, background 0.2s; }
-    .fasilitas-item:hover { border-color:var(--gold); background:var(--navy-light); }
-    .fasilitas-icon { font-size:2rem; margin-bottom:1rem; }
-    .fasilitas-name { font-size:0.88rem; font-weight:600; letter-spacing:0.04em; margin-bottom:0.5rem; }
-    .fasilitas-desc { font-size:0.76rem; opacity:0.48; line-height:1.5; }
+    /* ===== MODAL ===== */
+    .modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(8,16,36,0.88); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s, visibility 0.3s; padding: 1rem; }
+    .modal-overlay.open { opacity: 1; visibility: visible; pointer-events: all; }
+    .modal { background: var(--navy-card); border: 1px solid var(--gold-border); max-width: 820px; width: 100%; max-height: 92vh; overflow-y: auto; position: relative; transform: translateY(20px) scale(0.97); transition: transform 0.3s; }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+    .modal-img-placeholder { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; border-bottom: 3px solid var(--gold); position: relative; overflow: hidden; }
+    .modal-body { padding: 1.5rem; }
+    .modal-tag { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.03em; line-height: 1; margin-bottom: 1.2rem; }
+    .modal-desc { font-size: 0.9rem; line-height: 1.8; opacity: 0.72; margin-bottom: 1.5rem; }
+    .modal-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 1.5rem; }
+    .modal-feature { display: flex; align-items: flex-start; gap: 0.7rem; background: var(--navy-mid); padding: 0.75rem 0.85rem; border-left: 2px solid var(--gold); font-size: 0.8rem; line-height: 1.5; opacity: 0.78; }
+    .modal-feature-icon { flex-shrink: 0; font-size: 1rem; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; background: var(--navy-mid); border: 1px solid var(--gold-border); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--white); opacity: 0.7; transition: opacity 0.2s, background 0.2s; z-index: 10; border-radius: 2px; }
+    .modal-close:hover { opacity: 1; background: var(--gold-muted); }
 
-    #berita { background:var(--navy-mid); }
-    .berita-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:1px; }
-    .berita-card { background:var(--navy-card); padding:2rem; transition:background 0.2s; }
-    .berita-card:hover { background:var(--navy-light); }
-    .berita-card.featured { border-left:4px solid var(--gold); }
-    .berita-date { font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; color:var(--gold); margin-bottom:0.8rem; opacity:0.7; }
-    .berita-title { font-family:'Bebas Neue',sans-serif; font-size:1.35rem; letter-spacing:0.03em; margin-bottom:0.8rem; line-height:1.1; }
-    .berita-card.featured .berita-title { font-size:1.9rem; }
-    .berita-excerpt { font-size:0.84rem; opacity:0.55; line-height:1.65; }
-    .berita-tag { display:inline-block; margin-top:1.2rem; background:var(--gold-muted); border:1px solid var(--gold-border); padding:0.25rem 0.7rem; font-size:0.6rem; letter-spacing:0.12em; color:var(--gold); text-transform:uppercase; font-family:'Space Mono',monospace; }
+    /* ===== REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    #kontak { background:var(--navy); }
-    .kontak-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:5rem; }
-    .kontak-info-list { display:flex; flex-direction:column; gap:2rem; }
-    .kontak-info-item { display:flex; gap:1.5rem; align-items:flex-start; }
-    .kontak-info-icon { width:44px; height:44px; flex-shrink:0; border:1px solid var(--gold-border); background:var(--gold-muted); display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
-    .kontak-info-label { font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.15em; color:var(--gold); margin-bottom:0.3rem; }
-    .kontak-info-value { font-size:0.9rem; line-height:1.6; opacity:0.72; }
-    .kontak-form { display:flex; flex-direction:column; gap:1rem; }
-    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .form-group { display:flex; flex-direction:column; gap:0.4rem; }
-    .form-label { font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; color:var(--gold); opacity:0.7; text-transform:uppercase; }
-    .form-input, .form-textarea { background:var(--navy-card); border:1px solid rgba(240,237,228,0.08); color:var(--white); padding:0.85rem 1rem; font-family:'DM Sans',sans-serif; font-size:0.88rem; outline:none; transition:border-color 0.2s; }
-    .form-input:focus, .form-textarea:focus { border-color:var(--gold); }
-    .form-textarea { resize:vertical; min-height:120px; }
-    .form-input::placeholder, .form-textarea::placeholder { opacity:0.3; }
-
-    footer { background:var(--navy-card); border-top:1px solid var(--gold-border); padding:2.5rem 3.5rem; }
-    .footer-inner { display:flex; align-items:center; justify-content:space-between; }
-    .footer-left-logo { display:flex; align-items:center; gap:1rem; }
-    .footer-left-logo img { width:40px; height:40px; border-radius:50%; opacity:0.85; filter:drop-shadow(0 0 4px rgba(212,160,23,0.3)); }
-    .footer-text { font-size:0.76rem; opacity:0.4; line-height:1.65; }
-    .footer-text strong { color:var(--gold-light); opacity:0.9; font-size:0.82rem; display:block; }
-    .footer-links { display:flex; gap:2rem; }
-    .footer-links a { text-decoration:none; color:var(--white); opacity:0.38; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; transition:opacity 0.2s, color 0.2s; }
-    .footer-links a:hover { opacity:1; color:var(--gold); }
-    .footer-bottom { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(212,160,23,0.1); text-align:center; font-size:0.68rem; opacity:0.3; letter-spacing:0.08em; font-family:'Space Mono',monospace; }
-
-    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-
+    /* ===== TABLET (max 960px) ===== */
     @media (max-width: 960px) {
-      nav { padding:1rem 1.5rem; }
-      nav ul { gap:1.2rem; }
-      section { padding:4rem 1.5rem; }
-      #hero { grid-template-columns:1fr; padding:6rem 1.5rem 5rem; text-align:center; }
-      .hero-visual { display:none; }
-      .hero-sub { margin:1.2rem auto 0; }
-      .hero-cta { justify-content:center; }
-      .kontak-wrapper { grid-template-columns:1fr; gap:2.5rem; }
-      .program-grid { grid-template-columns:1fr; }
-      .program-card:nth-child(7),
-      .program-card:nth-child(8) { grid-column: auto; }
-      .fasilitas-grid { grid-template-columns:repeat(2,1fr); }
-      .fasilitas-grid .fasilitas-item:nth-child(9),
-      .fasilitas-grid .fasilitas-item:nth-child(10),
-      .fasilitas-grid .fasilitas-item:nth-child(11) { grid-column: auto; }
-      .berita-grid { grid-template-columns:1fr; }
-      .footer-inner { flex-direction:column; gap:1.5rem; text-align:center; }
+      nav { padding: 0.85rem 1.5rem; }
+      nav ul { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+
+      #hero {
+        grid-template-columns: 1fr;
+        padding: 6rem 1.5rem 3rem;
+        min-height: auto;
+        text-align: center;
+      }
+      .hero-visual { display: none; }
+      .hero-sub { margin: 1.2rem auto 0; max-width: 100%; }
+      .hero-cta { justify-content: center; }
+      .hero-stats-bar { justify-content: center; }
+      .stat-pill { flex: 1; min-width: 0; padding: 0.8rem 0.6rem; }
+
+      section { padding: 4rem 1.5rem; }
+      #highlights { padding: 4rem 1.5rem; }
+      .shortcut-grid { grid-template-columns: 1fr; }
+      .shortcut-card { border-bottom: 1px solid rgba(212,160,23,0.08); border-bottom-width: 0; border-left: 3px solid transparent; padding: 1.8rem 1.4rem; }
+      .shortcut-card:hover { border-left-color: var(--gold); border-bottom-color: transparent; }
+
+      .kontak-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .modal-features { grid-template-columns: 1fr; }
+
+      footer { padding: 2rem 1.5rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-left-logo { justify-content: center; }
+      .footer-links { justify-content: center; gap: 1.2rem; }
+    }
+
+    /* ===== MOBILE (max 600px) ===== */
+    @media (max-width: 600px) {
+      nav { padding: 0.75rem 1rem; }
+      .nav-logo img { width: 36px; height: 36px; }
+      .nav-title { font-size: 0.6rem; }
+
+      #hero { padding: 5rem 1rem 2.5rem; }
+      h1 { font-size: clamp(2.8rem, 11vw, 4rem); }
+      .hero-tagline { font-size: 0.55rem; letter-spacing: 0.14em; }
+      .hero-badge { font-size: 0.52rem; padding: 0.35rem 0.8rem; margin-bottom: 1.4rem; }
+      .hero-sub { font-size: 0.9rem; }
+      .hero-cta { gap: 0.8rem; }
+      .btn-primary, .btn-outline { padding: 0.8rem 1.6rem; font-size: 0.75rem; }
+      .hero-stats-bar { gap: 0; margin-top: 2rem; }
+      .stat-num { font-size: 1.6rem; }
+      .stat-label { font-size: 0.5rem; }
+
+      section { padding: 3rem 1rem; }
+      #highlights { padding: 3rem 1rem; }
+      h2 { font-size: clamp(2rem, 7vw, 3rem); }
+
+      .kontak-info-item { gap: 1rem; }
+      .kontak-info-icon { width: 38px; height: 38px; font-size: 1rem; }
+      .kontak-info-value { font-size: 0.85rem; }
+
+      .modal-overlay { padding: 0.5rem; }
+      .modal { max-height: 95vh; }
+      .modal-title { font-size: 1.8rem; }
+      .modal-body { padding: 1.2rem; }
+      .modal-img-placeholder { height: 160px; }
+
+      footer { padding: 1.8rem 1rem; }
+      .footer-links { gap: 0.8rem; }
+      .footer-links a { font-size: 0.65rem; }
+    }
+
+    /* ===== VERY SMALL (max 380px) ===== */
+    @media (max-width: 380px) {
+      nav { padding: 0.65rem 0.8rem; }
+      .nav-title { font-size: 0.55rem; }
+      .nav-logo img { width: 32px; height: 32px; }
+      h1 { font-size: 2.5rem; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; text-align: center; }
+      .stat-pill { padding: 0.6rem 0.4rem; }
+      .stat-num { font-size: 1.3rem; }
+      .stat-label { font-size: 0.45rem; letter-spacing: 0.05em; }
     }
   </style>
 </head>
 <body>
 
+<!-- ========== NAV ========== -->
 <nav>
-  <div class="nav-logo">
+  <a class="nav-logo" href="index.html">
     <img src="image/logo.png" alt="Logo Kementerian Imigrasi dan Pemasyarakatan RI" />
     <div class="nav-title">
       Lembaga Pemasyarakatan
       <span>Narkotika Jakarta</span>
     </div>
-  </div>
+  </a>
+
+  <!-- Desktop nav -->
   <ul>
     <li class="nav-dropdown">
       <button class="nav-drop-btn">Profil <span class="nav-drop-arrow">▼</span></button>
       <div class="nav-drop-menu">
         <div class="nav-drop-menu-inner">
-          <a class="drop-item" href="sejarah.html">
-            <div class="drop-item-icon">🏛️</div>
-            <div class="drop-item-text">Sejarah</div>
-          </a>
-          <a class="drop-item" href="visimisi.html">
-            <div class="drop-item-icon">🎯</div>
-            <div class="drop-item-text">Visi & Misi</div>
-          </a>
-          <a class="drop-item" href="struktur.html">
-            <div class="drop-item-icon">🏢</div>
-            <div class="drop-item-text">Struktur Organisasi</div>
-          </a>
+          <a class="drop-item" href="sejarah.html"><div class="drop-item-icon">🏛️</div><div class="drop-item-text">Sejarah</div></a>
+          <a class="drop-item" href="visimisi.html"><div class="drop-item-icon">🎯</div><div class="drop-item-text">Visi & Misi</div></a>
+          <a class="drop-item" href="struktur.html"><div class="drop-item-icon">🏢</div><div class="drop-item-text">Struktur Organisasi</div></a>
         </div>
       </div>
     </li>
@@ -269,8 +316,27 @@
     <li><a href="berita.html">Berita</a></li>
     <li><a href="index.html#kontak">Kontak</a></li>
   </ul>
+
+  <!-- Hamburger -->
+  <button class="nav-hamburger" id="hamburger" aria-label="Buka menu navigasi">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- Mobile drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-section-label">Profil</div>
+  <a class="sub" href="sejarah.html">🏛️ &nbsp;Sejarah</a>
+  <a class="sub" href="visimisi.html">🎯 &nbsp;Visi & Misi</a>
+  <a class="sub" href="struktur.html">🏢 &nbsp;Struktur Organisasi</a>
+  <div class="mobile-section-label" style="margin-top:0.8rem;"></div>
+  <a href="program.html">Program</a>
+  <a href="fasilitas.html">Fasilitas</a>
+  <a href="berita.html">Berita</a>
+  <a href="index.html#kontak">Kontak</a>
+</div>
+
+<!-- ========== HERO ========== -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-bg-grid"></div>
@@ -283,6 +349,11 @@
       <a href="program.html" class="btn-primary">Program Kami</a>
       <a href="index.html#kontak" class="btn-outline">Hubungi Kami</a>
     </div>
+    <div class="hero-stats-bar">
+      <div class="stat-pill"><div class="stat-num">2001</div><div class="stat-label">Warga Binaan</div></div>
+      <div class="stat-pill"><div class="stat-num">8</div><div class="stat-label">Program Utama</div></div>
+      <div class="stat-pill"><div class="stat-num">24/7</div><div class="stat-label">Pelayanan</div></div>
+    </div>
   </div>
   <div class="hero-visual">
     <div class="logo-showcase">
@@ -290,51 +361,40 @@
       <div class="logo-ring-2"></div>
       <img class="logo-img" src="image/logo.png" alt="Logo" />
     </div>
-    <div class="hero-stats-bar">
-      <div class="stat-pill"><div class="stat-num">2001</div><div class="stat-label">Warga Binaan</div></div>
-      <div class="stat-pill"><div class="stat-num">8</div><div class="stat-label">Program Utama</div></div>
-      <div class="stat-pill"><div class="stat-num">24/7</div><div class="stat-label">Pelayanan</div></div>
-    </div>
   </div>
 </section>
 
-<!-- SHORTCUT CARDS -->
-<section id="highlights" style="background:var(--navy-mid);padding:5rem 3.5rem;">
+<!-- ========== SHORTCUT CARDS ========== -->
+<section id="highlights">
   <div class="section-tag">Jelajahi Lebih Lanjut</div>
   <h2>Temukan <em>Informasi</em></h2>
   <div class="section-divider"></div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;" class="reveal">
-    <a href="program.html" style="text-decoration:none;background:var(--navy-card);padding:2.5rem;display:block;border-bottom:3px solid transparent;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='var(--navy-light)'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--navy-card)'">
-      <div style="font-size:2.5rem;margin-bottom:1.2rem;">📋</div>
-      <div style="font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--gold);opacity:0.6;margin-bottom:0.5rem;">8 Program Unggulan</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.7rem;">Program Pembinaan</div>
-      <p style="font-size:0.85rem;line-height:1.7;opacity:0.55;color:var(--white);">Rehabilitasi, vokasional, pendidikan, spiritual, hingga reintegrasi sosial untuk warga binaan.</p>
-      <div style="font-size:0.62rem;opacity:0.4;margin-top:1rem;font-family:'Space Mono',monospace;letter-spacing:0.08em;color:var(--gold);">Lihat semua program →</div>
+  <div class="shortcut-grid reveal">
+    <a href="program.html" class="shortcut-card">
+      <div class="shortcut-emoji">📋</div>
+      <div class="shortcut-num">8 Program Unggulan</div>
+      <div class="shortcut-title">Program Pembinaan</div>
+      <p class="shortcut-desc">Rehabilitasi, vokasional, pendidikan, spiritual, hingga reintegrasi sosial untuk warga binaan.</p>
+      <div class="shortcut-more">Lihat semua program →</div>
     </a>
-    <a href="fasilitas.html" style="text-decoration:none;background:var(--navy-card);padding:2.5rem;display:block;border-bottom:3px solid transparent;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='var(--navy-light)'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--navy-card)'">
-      <div style="font-size:2.5rem;margin-bottom:1.2rem;">🏛️</div>
-      <div style="font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--gold);opacity:0.6;margin-bottom:0.5rem;">11 Fasilitas</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.7rem;">Sarana & Prasarana</div>
-      <p style="font-size:0.85rem;line-height:1.7;opacity:0.55;color:var(--white);">BLK, SAE, budidaya perikanan, perpustakaan, tempat ibadah, dan fasilitas kunjungan terpadu.</p>
-      <div style="font-size:0.62rem;opacity:0.4;margin-top:1rem;font-family:'Space Mono',monospace;letter-spacing:0.08em;color:var(--gold);">Lihat semua fasilitas →</div>
+    <a href="fasilitas.html" class="shortcut-card">
+      <div class="shortcut-emoji">🏛️</div>
+      <div class="shortcut-num">11 Fasilitas</div>
+      <div class="shortcut-title">Sarana & Prasarana</div>
+      <p class="shortcut-desc">BLK, SAE, budidaya perikanan, perpustakaan, tempat ibadah, dan fasilitas kunjungan terpadu.</p>
+      <div class="shortcut-more">Lihat semua fasilitas →</div>
     </a>
-    <a href="berita.html" style="text-decoration:none;background:var(--navy-card);padding:2.5rem;display:block;border-bottom:3px solid transparent;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='var(--navy-light)'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--navy-card)'">
-      <div style="font-size:2.5rem;margin-bottom:1.2rem;">📰</div>
-      <div style="font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--gold);opacity:0.6;margin-bottom:0.5rem;">Informasi Terkini</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.7rem;">Berita & Pengumuman</div>
-      <p style="font-size:0.85rem;line-height:1.7;opacity:0.55;color:var(--white);">Update terbaru kegiatan, kerjasama, dan pengumuman resmi Lapas Narkotika Jakarta.</p>
-      <div style="font-size:0.62rem;opacity:0.4;margin-top:1rem;font-family:'Space Mono',monospace;letter-spacing:0.08em;color:var(--gold);">Lihat semua berita →</div>
+    <a href="berita.html" class="shortcut-card">
+      <div class="shortcut-emoji">📰</div>
+      <div class="shortcut-num">Informasi Terkini</div>
+      <div class="shortcut-title">Berita & Pengumuman</div>
+      <p class="shortcut-desc">Update terbaru kegiatan, kerjasama, dan pengumuman resmi Lapas Narkotika Jakarta.</p>
+      <div class="shortcut-more">Lihat semua berita →</div>
     </a>
   </div>
 </section>
 
-
-
-
-
-
-
-
+<!-- ========== KONTAK ========== -->
 <section id="kontak">
   <div class="section-tag">Hubungi Kami</div>
   <h2>Informasi <em>Kontak</em></h2>
@@ -343,10 +403,25 @@
     <div>
       <div style="margin-bottom:2rem;opacity:0.62;font-size:0.95rem;line-height:1.75;">Lapas Narkotika Kelas IIA Jakarta membuka layanan informasi bagi keluarga warga binaan dan masyarakat umum setiap hari kerja.</div>
       <div class="kontak-info-list">
-        <div class="kontak-info-item"><div class="kontak-info-icon">📍</div><div><div class="kontak-info-label">Alamat</div><div class="kontak-info-value">Jl. Bekasi Tim. Raya No.170A,<br>Cipinang Besar Utara, Kecamatan Jatinegara,<br>Jakarta Timur, DKI Jakarta 13410</div></div></div>
-        <div class="kontak-info-item"><div class="kontak-info-icon">📞</div><div><div class="kontak-info-label">Telepon</div><div class="kontak-info-value">(021) 85910104<br>Senin – Jumat: 08.00 – 16.00 WIB</div></div></div>
-        <div class="kontak-info-item"><div class="kontak-info-icon">✉️</div><div><div class="kontak-info-label">Email</div><div class="kontak-info-value">lapas.narkotika.jakarta@imipas.go.id</div></div></div>
-        <div class="kontak-info-item"><div class="kontak-info-icon">🕐</div><div><div class="kontak-info-label">Jam Kunjungan</div><div class="kontak-info-value">Senin s.d Kamis<br>Sesi Pagi: 09.00 – 11.00 WIB<br>Sesi Siang: 13.30 – 14.45 WIB<br><small style="opacity:0.45;font-size:0.8rem;">Pendaftaran paling lambat 30 menit sebelum jadwal</small></div></div></div>
+        <div class="kontak-info-item">
+          <div class="kontak-info-icon">📍</div>
+          <div><div class="kontak-info-label">Alamat</div><div class="kontak-info-value">Jl. Bekasi Tim. Raya No.170A, Cipinang Besar Utara, Kecamatan Jatinegara, Jakarta Timur, DKI Jakarta 13410</div></div>
+        </div>
+        <div class="kontak-info-item">
+          <div class="kontak-info-icon">📞</div>
+          <div><div class="kontak-info-label">Telepon</div><div class="kontak-info-value">(021) 85910104<br>Senin – Jumat: 08.00 – 16.00 WIB</div></div>
+        </div>
+        <div class="kontak-info-item">
+          <div class="kontak-info-icon">✉️</div>
+          <div><div class="kontak-info-label">Email</div><div class="kontak-info-value">lapas.narkotika.jakarta@imipas.go.id</div></div>
+        </div>
+        <div class="kontak-info-item">
+          <div class="kontak-info-icon">🕐</div>
+          <div>
+            <div class="kontak-info-label">Jam Kunjungan</div>
+            <div class="kontak-info-value">Senin s.d Kamis<br>Sesi Pagi: 09.00 – 11.00 WIB<br>Sesi Siang: 13.30 – 14.45 WIB<br><small style="opacity:0.45;font-size:0.8rem;">Pendaftaran paling lambat 30 menit sebelum jadwal</small></div>
+          </div>
+        </div>
       </div>
     </div>
     <div>
@@ -376,6 +451,7 @@
   </div>
 </section>
 
+<!-- ========== FOOTER ========== -->
 <footer>
   <div class="footer-inner">
     <div class="footer-left-logo">
@@ -396,6 +472,7 @@
   <div class="footer-bottom">© 2026 Fasum & BMN — Semua Hak Dilindungi</div>
 </footer>
 
+<!-- ========== MODAL ========== -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal" id="modalBox">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -410,132 +487,71 @@
 </div>
 
 <script>
+  /* ---- Mobile Menu (sama persis pola sejarah.html) ---- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ---- Modal Data ---- */
   const programs = {
     rehabilitasi: {
-      tag: '01 — Rehabilitasi Medis',
-      title: 'Rehabilitasi Narkotika',
-      icon: '🏥',
-      color: '#0e2a38',
+      tag: '01 — Rehabilitasi Medis', title: 'Rehabilitasi Narkotika', icon: '🏥', color: '#0e2a38',
       desc: 'Program Rehabilitasi Narkotika adalah layanan pemulihan fisik dan mental berbasis klinis yang dirancang khusus untuk warga binaan dengan ketergantungan narkotika. Dijalankan oleh tim dokter umum, dokter spesialis jiwa, dan perawat terlatih, program ini mencakup seluruh fase pemulihan dari detoksifikasi hingga stabilisasi kondisi kesehatan jangka panjang.',
-      features: [
-        {icon:'💉', text:'Detoksifikasi medis terstruktur dan terawasi'},
-        {icon:'🩺', text:'Pemeriksaan kesehatan komprehensif rutin'},
-        {icon:'💊', text:'Terapi substitusi opioid (Metadon/Buprenorfin)'},
-        {icon:'🧬', text:'Penanganan penyakit penyerta (HIV, Hepatitis)'},
-        {icon:'🏨', text:'Unit rawat inap khusus pasca-detoksifikasi'},
-        {icon:'📋', text:'Rekam medis digital & pemantauan berkelanjutan'}
-      ]
+      features: [{icon:'💉',text:'Detoksifikasi medis terstruktur dan terawasi'},{icon:'🩺',text:'Pemeriksaan kesehatan komprehensif rutin'},{icon:'💊',text:'Terapi substitusi opioid (Metadon/Buprenorfin)'},{icon:'🧬',text:'Penanganan penyakit penyerta (HIV, Hepatitis)'},{icon:'🏨',text:'Unit rawat inap khusus pasca-detoksifikasi'},{icon:'📋',text:'Rekam medis digital & pemantauan berkelanjutan'}]
     },
     kepribadian: {
-      tag: '02 — Pembinaan Kepribadian',
-      title: 'Pembinaan Kepribadian',
-      icon: '🧠',
-      color: '#0e1a38',
-      desc: 'Program Pembinaan Kepribadian berfokus pada pembentukan karakter, mental, dan moral warga binaan sebagai pondasi perubahan hidup jangka panjang. Program ini mencakup pendekatan psikologis, sosial, dan budaya untuk membentuk individu yang bertanggung jawab dan berdaya guna bagi masyarakat.',
-      features: [
-        {icon:'🗣️', text:'Konseling individual dan kelompok rutin'},
-        {icon:'📓', text:'Modul pembentukan karakter dan disiplin diri'},
-        {icon:'🎭', text:'Terapi ekspresif: seni, drama, dan musik'},
-        {icon:'🧩', text:'Program Cognitive Behavioral Therapy (CBT)'},
-        {icon:'👥', text:'Kelompok dukungan sebaya (peer support group)'},
-        {icon:'📊', text:'Asesmen psikologis berkala & laporan perkembangan'}
-      ]
+      tag: '02 — Pembinaan Kepribadian', title: 'Pembinaan Kepribadian', icon: '🧠', color: '#0e1a38',
+      desc: 'Program Pembinaan Kepribadian berfokus pada pembentukan karakter, mental, dan moral warga binaan sebagai pondasi perubahan hidup jangka panjang.',
+      features: [{icon:'🗣️',text:'Konseling individual dan kelompok rutin'},{icon:'📓',text:'Modul pembentukan karakter dan disiplin diri'},{icon:'🎭',text:'Terapi ekspresif: seni, drama, dan musik'},{icon:'🧩',text:'Program Cognitive Behavioral Therapy (CBT)'},{icon:'👥',text:'Kelompok dukungan sebaya (peer support group)'},{icon:'📊',text:'Asesmen psikologis berkala & laporan perkembangan'}]
     },
     blk: {
-      tag: '03 — Vokasional',
-      title: 'Balai Latihan Kerja',
-      icon: '🔧',
-      color: '#1a1208',
-      desc: 'Program Balai Latihan Kerja (BLK) membekali warga binaan dengan keterampilan teknis yang relevan dengan kebutuhan pasar kerja saat ini. Pelatihan dilaksanakan oleh instruktur berpengalaman dan mengacu pada standar kompetensi nasional agar lulusan siap bersaing di dunia kerja.',
-      features: [
-        {icon:'🧵', text:'Menjahit & tata busana bersertifikat'},
-        {icon:'👨‍🍳', text:'Tata boga, memasak, & pastri profesional'},
-        {icon:'🪚', text:'Pertukangan kayu & konstruksi bangunan ringan'},
-        {icon:'🌱', text:'Budidaya pertanian & akuakultur hidroponik'},
-        {icon:'🖥️', text:'Desain grafis, office, & produktivitas digital'},
-        {icon:'🎨', text:'Kerajinan tangan & seni kriya bernilai jual'}
-      ]
+      tag: '03 — Vokasional', title: 'Balai Latihan Kerja', icon: '🔧', color: '#1a1208',
+      desc: 'Program Balai Latihan Kerja (BLK) membekali warga binaan dengan keterampilan teknis yang relevan dengan kebutuhan pasar kerja saat ini.',
+      features: [{icon:'🧵',text:'Menjahit & tata busana bersertifikat'},{icon:'👨‍🍳',text:'Tata boga, memasak, & pastri profesional'},{icon:'🪚',text:'Pertukangan kayu & konstruksi bangunan ringan'},{icon:'🌱',text:'Budidaya pertanian & akuakultur hidroponik'},{icon:'🖥️',text:'Desain grafis, office, & produktivitas digital'},{icon:'🎨',text:'Kerajinan tangan & seni kriya bernilai jual'}]
     },
     sertifikasi: {
-      tag: '04 — Pelatihan Bersertifikat',
-      title: 'Pelatihan Bersertifikat',
-      icon: '📜',
-      color: '#1a1208',
-      desc: 'Program Pelatihan Bersertifikat bekerja sama langsung dengan lembaga sertifikasi nasional untuk memastikan setiap warga binaan mendapatkan pengakuan kompetensi resmi. Sertifikat yang diterbitkan diakui oleh dunia industri dan membuka peluang kerja yang lebih luas setelah bebas.',
-      features: [
-        {icon:'🏅', text:'Sertifikat kompetensi resmi BNSP yang diakui nasional'},
-        {icon:'🤝', text:'Kerjasama dengan 12+ lembaga sertifikasi profesi'},
-        {icon:'📝', text:'Ujian kompetensi terstandarisasi & terstruktur'},
-        {icon:'💼', text:'Pembekalan portofolio kerja & CV profesional'},
-        {icon:'🔗', text:'Jaringan mitra perusahaan untuk penyerapan tenaga kerja'},
-        {icon:'🔄', text:'Program re-sertifikasi dan peningkatan level kompetensi'}
-      ]
+      tag: '04 — Pelatihan Bersertifikat', title: 'Pelatihan Bersertifikat', icon: '📜', color: '#1a1208',
+      desc: 'Program Pelatihan Bersertifikat bekerja sama langsung dengan lembaga sertifikasi nasional untuk memastikan setiap warga binaan mendapatkan pengakuan kompetensi resmi.',
+      features: [{icon:'🏅',text:'Sertifikat kompetensi resmi BNSP yang diakui nasional'},{icon:'🤝',text:'Kerjasama dengan 12+ lembaga sertifikasi profesi'},{icon:'📝',text:'Ujian kompetensi terstandarisasi & terstruktur'},{icon:'💼',text:'Pembekalan portofolio kerja & CV profesional'},{icon:'🔗',text:'Jaringan mitra perusahaan untuk penyerapan tenaga kerja'},{icon:'🔄',text:'Program re-sertifikasi dan peningkatan level kompetensi'}]
     },
     pkbm: {
-      tag: '05 — Pendidikan',
-      title: 'PKBM',
-      icon: '📖',
-      color: '#0e2830',
-      desc: 'Program Pusat Kegiatan Belajar Masyarakat (PKBM) memastikan setiap warga binaan memiliki bekal akademis yang memadai. Bekerja sama dengan Dinas Pendidikan DKI Jakarta, lapas menyelenggarakan program kesetaraan yang diakui secara nasional serta meningkatkan kepercayaan diri warga binaan.',
-      features: [
-        {icon:'📚', text:'Kesetaraan Paket A (SD), B (SMP), C (SMA)'},
-        {icon:'✏️', text:'Literasi dasar & numerasi untuk WBP buta huruf'},
-        {icon:'🎓', text:'Bimbingan belajar Ujian Kesetaraan Nasional'},
-        {icon:'💻', text:'Literasi digital dan kecakapan teknologi informasi'},
-        {icon:'📰', text:'Perpustakaan dengan koleksi 2.000+ judul buku'},
-        {icon:'🏫', text:'Kerjasama dengan universitas untuk program beasiswa'}
-      ]
+      tag: '05 — Pendidikan', title: 'PKBM', icon: '📖', color: '#0e2830',
+      desc: 'Program Pusat Kegiatan Belajar Masyarakat (PKBM) memastikan setiap warga binaan memiliki bekal akademis yang memadai.',
+      features: [{icon:'📚',text:'Kesetaraan Paket A (SD), B (SMP), C (SMA)'},{icon:'✏️',text:'Literasi dasar & numerasi untuk WBP buta huruf'},{icon:'🎓',text:'Bimbingan belajar Ujian Kesetaraan Nasional'},{icon:'💻',text:'Literasi digital dan kecakapan teknologi informasi'},{icon:'📰',text:'Perpustakaan dengan koleksi 2.000+ judul buku'},{icon:'🏫',text:'Kerjasama dengan universitas untuk program beasiswa'}]
     },
     hipnoterapi: {
-      tag: '06 — Pembinaan Intelektual',
-      title: 'Hypnotherapy & Pembinaan Intelektual',
-      icon: '💡',
-      color: '#0e0e30',
-      desc: 'Program Hypnotherapy dan Pembinaan Intelektual merupakan pendekatan inovatif dalam pengembangan mental warga binaan. Melalui teknik hypnotherapy klinis dan pelatihan motivasi, program ini membantu mengubah pola pikir negatif, meningkatkan kepercayaan diri, dan membangun motivasi hidup yang berkelanjutan.',
-      features: [
-        {icon:'🧘', text:'Sesi hypnotherapy individual oleh terapis bersertifikat'},
-        {icon:'💪', text:'Pelatihan motivasi & pembangunan kepercayaan diri'},
-        {icon:'🧠', text:'Teknik mindfulness dan manajemen stres'},
-        {icon:'📖', text:'Program literasi emosional & kecerdasan sosial'},
-        {icon:'🎯', text:'Penetapan tujuan hidup & perencanaan masa depan'},
-        {icon:'🌟', text:'Seminar pengembangan diri dengan pembicara inspiratif'}
-      ]
+      tag: '06 — Pembinaan Intelektual', title: 'Hypnotherapy & Pembinaan Intelektual', icon: '💡', color: '#0e0e30',
+      desc: 'Program Hypnotherapy dan Pembinaan Intelektual merupakan pendekatan inovatif dalam pengembangan mental warga binaan.',
+      features: [{icon:'🧘',text:'Sesi hypnotherapy individual oleh terapis bersertifikat'},{icon:'💪',text:'Pelatihan motivasi & pembangunan kepercayaan diri'},{icon:'🧠',text:'Teknik mindfulness dan manajemen stres'},{icon:'📖',text:'Program literasi emosional & kecerdasan sosial'},{icon:'🎯',text:'Penetapan tujuan hidup & perencanaan masa depan'},{icon:'🌟',text:'Seminar pengembangan diri dengan pembicara inspiratif'}]
     },
     usaha: {
-      tag: '07 — Kemandirian Usaha',
-      title: 'Kemandirian Usaha',
-      icon: '🌱',
-      color: '#0a2010',
-      desc: 'Program Kemandirian Usaha dirancang untuk membekali warga binaan dengan kemampuan berwirausaha secara mandiri setelah bebas. Program ini mencakup pelatihan praktis dari hulu ke hilir mulai dari produksi hingga pemasaran, dengan pendampingan dari mentor wirausaha berpengalaman.',
-      features: [
-        {icon:'🥖', text:'Pelatihan bakery & usaha kuliner skala rumahan'},
-        {icon:'👗', text:'Usaha konveksi & tata busana siap jual'},
-        {icon:'🎪', text:'Kerajinan tangan & produk kreatif bernilai ekspor'},
-        {icon:'🐔', text:'Budidaya ayam petelur & pertanian produktif'},
-        {icon:'📱', text:'Pemasaran digital & e-commerce untuk UMKM'},
-        {icon:'💰', text:'Literasi keuangan & manajemen usaha kecil'}
-      ]
+      tag: '07 — Kemandirian Usaha', title: 'Kemandirian Usaha', icon: '🌱', color: '#0a2010',
+      desc: 'Program Kemandirian Usaha dirancang untuk membekali warga binaan dengan kemampuan berwirausaha secara mandiri setelah bebas.',
+      features: [{icon:'🥖',text:'Pelatihan bakery & usaha kuliner skala rumahan'},{icon:'👗',text:'Usaha konveksi & tata busana siap jual'},{icon:'🎪',text:'Kerajinan tangan & produk kreatif bernilai ekspor'},{icon:'🐔',text:'Budidaya ayam petelur & pertanian produktif'},{icon:'📱',text:'Pemasaran digital & e-commerce untuk UMKM'},{icon:'💰',text:'Literasi keuangan & manajemen usaha kecil'}]
     },
     integrasi: {
-      tag: '08 — Reintegrasi Sosial',
-      title: 'Integrasi & Pembebasan Bersyarat',
-      icon: '🤝',
-      color: '#0e0e30',
-      desc: 'Program Integrasi dan Pembebasan Bersyarat mempersiapkan warga binaan untuk kembali ke tengah masyarakat secara mulus dan berkelanjutan. Program ini mencakup fase asimilasi bertahap, pengurusan administrasi pembebasan, serta pendampingan intensif oleh pembimbing kemasyarakatan.',
-      features: [
-        {icon:'🏠', text:'Program asimilasi kerja & asimilasi sosial bertahap'},
-        {icon:'📅', text:'Cuti menjelang bebas (CMB) & cuti bersyarat terstruktur'},
-        {icon:'📋', text:'Pengurusan administrasi pembebasan bersyarat (PB)'},
-        {icon:'🧭', text:'Pendampingan Balai Pemasyarakatan (BAPAS)'},
-        {icon:'👨‍👩‍👧', text:'Rekonsiliasi keluarga & mediasi komunitas'},
-        {icon:'📱', text:'Pemantauan pasca-bebas via aplikasi digital'}
-      ]
+      tag: '08 — Reintegrasi Sosial', title: 'Integrasi & Pembebasan Bersyarat', icon: '🤝', color: '#0e0e30',
+      desc: 'Program Integrasi dan Pembebasan Bersyarat mempersiapkan warga binaan untuk kembali ke tengah masyarakat secara mulus dan berkelanjutan.',
+      features: [{icon:'🏠',text:'Program asimilasi kerja & asimilasi sosial bertahap'},{icon:'📅',text:'Cuti menjelang bebas (CMB) & cuti bersyarat terstruktur'},{icon:'📋',text:'Pengurusan administrasi pembebasan bersyarat (PB)'},{icon:'🧭',text:'Pendampingan Balai Pemasyarakatan (BAPAS)'},{icon:'👨‍👩‍👧',text:'Rekonsiliasi keluarga & mediasi komunitas'},{icon:'📱',text:'Pemantauan pasca-bebas via aplikasi digital'}]
     }
   };
 
   function openModal(id) {
     const p = programs[id]; if (!p) return;
-    document.getElementById('modalImgWrap').innerHTML = `<div class="modal-img-placeholder" style="background:linear-gradient(135deg,${p.color} 0%,#0d1b3e 100%);"><span style="font-size:5.5rem;position:relative;z-index:1;filter:drop-shadow(0 0 24px rgba(212,160,23,0.5))">${p.icon}</span><div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(212,160,23,0.04) 0,rgba(212,160,23,0.04) 1px,transparent 1px,transparent 28px)"></div><div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(13,27,62,0.95))"></div></div>`;
+    document.getElementById('modalImgWrap').innerHTML = `<div class="modal-img-placeholder" style="background:linear-gradient(135deg,${p.color} 0%,#0d1b3e 100%);"><span style="font-size:5rem;position:relative;z-index:1;filter:drop-shadow(0 0 24px rgba(212,160,23,0.5))">${p.icon}</span><div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(212,160,23,0.04) 0,rgba(212,160,23,0.04) 1px,transparent 1px,transparent 28px)"></div><div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(13,27,62,0.95))"></div></div>`;
     document.getElementById('modalTag').textContent = p.tag;
     document.getElementById('modalTitle').textContent = p.title;
     document.getElementById('modalDesc').textContent = p.desc;
@@ -547,10 +563,12 @@
   function closeModalOutside(e) { if (e.target===document.getElementById('modalOverlay')) closeModal(); }
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
+  /* ---- Scroll Reveal ---- */
   const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} }); },{threshold:0.10});
+  const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} }); },{threshold:0.08});
   reveals.forEach(r=>io.observe(r));
 
+  /* ---- Active Nav ---- */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav ul a');
   window.addEventListener('scroll', ()=>{ let current=''; sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120) current=s.id;}); navLinks.forEach(a=>{const active=a.getAttribute('href')==='#'+current; a.style.color=active?'var(--gold-light)':''; a.style.opacity=active?'1':''; }); });
