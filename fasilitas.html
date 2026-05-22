@@ -6,94 +6,267 @@
   <title>Fasilitas — Lapas Narkotika Jakarta</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{--navy:#0d1b3e;--navy-mid:#162248;--navy-light:#1e2f5e;--navy-card:#111d3a;--gold:#d4a017;--gold-light:#f5c800;--gold-muted:rgba(212,160,23,0.13);--gold-border:rgba(212,160,23,0.28);--white:#f0ede4;}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;}
-    body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --navy:       #0d1b3e;
+      --navy-mid:   #162248;
+      --navy-light: #1e2f5e;
+      --navy-card:  #111d3a;
+      --gold:       #d4a017;
+      --gold-light: #f5c800;
+      --gold-muted: rgba(212,160,23,0.13);
+      --gold-border:rgba(212,160,23,0.28);
+      --white:      #f0ede4;
+    }
 
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 3.5rem;background:rgba(13,27,62,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--gold-border);}
-    .nav-logo{display:flex;align-items:center;gap:1rem;}
-    .nav-logo img{width:46px;height:46px;border-radius:50%;object-fit:cover;filter:drop-shadow(0 0 8px rgba(212,160,23,0.5));}
-    .nav-title{font-size:0.68rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--white);line-height:1.35;}
-    .nav-title span{color:var(--gold-light);display:block;}
-    nav ul{list-style:none;display:flex;gap:2.2rem;align-items:center;}
-    nav ul a{text-decoration:none;color:var(--white);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:400;opacity:0.65;transition:opacity 0.2s,color 0.2s;}
-    nav ul a:hover,nav ul a.active{opacity:1;color:var(--gold-light);}
-    .nav-dropdown{position:relative;}
-    .nav-drop-btn{display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:var(--white);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:400;opacity:0.65;transition:opacity 0.2s,color 0.2s;background:none;border:none;padding:0.4rem 0;font-family:inherit;}
-    .nav-dropdown:hover .nav-drop-btn{opacity:1;color:var(--gold-light);}
-    .nav-drop-arrow{font-size:0.55rem;transition:transform 0.25s;display:inline-block;}
-    .nav-dropdown:hover .nav-drop-arrow{transform:rotate(180deg);}
-    .nav-drop-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:14px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.2s,visibility 0.2s;z-index:200;}
-    .nav-dropdown:hover .nav-drop-menu{opacity:1;visibility:visible;pointer-events:all;}
-    .nav-drop-menu-inner{background:rgba(13,27,62,0.98);backdrop-filter:blur(20px);border:1px solid var(--gold-border);min-width:210px;position:relative;}
-    .nav-drop-menu-inner::before{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:8px;height:8px;background:var(--gold);clip-path:polygon(50% 0%,100% 100%,0 100%);}
-    .drop-item{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 1.2rem;cursor:pointer;border-bottom:1px solid rgba(212,160,23,0.08);transition:background 0.18s;text-decoration:none;}
-    .drop-item:last-child{border-bottom:none;}
-    .drop-item:hover{background:var(--gold-muted);}
-    .drop-item-icon{font-size:1.1rem;flex-shrink:0;}
-    .drop-item-text{font-size:0.75rem;letter-spacing:0.06em;opacity:0.82;color:var(--white);}
-    .drop-item:hover .drop-item-text{opacity:1;color:var(--gold-light);}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
 
-    .page-hero{padding:9rem 3.5rem 4rem;background:var(--navy);position:relative;overflow:hidden;border-bottom:1px solid var(--gold-border);}
-    .breadcrumb { display: flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.65; text-transform: uppercase; margin-bottom: 1.5rem; }
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 3.5rem;
+      background: rgba(13,27,62,0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gold-border);
+    }
+    /* FIX: nav-logo butuh text-decoration:none agar bisa diklik sebagai link */
+    .nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; filter: drop-shadow(0 0 8px rgba(212,160,23,0.5)); }
+    .nav-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); line-height: 1.35; }
+    .nav-title span { color: var(--gold-light); display: block; }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
+    nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
+    nav ul a:hover, nav ul a.active { opacity: 1; color: var(--gold-light); }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px; width: 36px; height: 36px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gold-light); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99;
+      background: rgba(13,27,62,0.98);
+      padding: 5.5rem 2rem 2rem;
+      flex-direction: column; gap: 0;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      display: block; padding: 1rem 0;
+      text-decoration: none; color: var(--white);
+      font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400;
+      border-bottom: 1px solid rgba(212,160,23,0.1);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a.active-page { color: var(--gold-light); }
+    .mobile-menu .mobile-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.7;
+      text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.3rem;
+    }
+    .mobile-menu a.sub { padding-left: 1rem; font-size: 0.95rem; opacity: 0.8; }
+
+    /* Desktop dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-drop-btn {
+      display: flex; align-items: center; gap: 0.4rem; cursor: pointer;
+      color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s;
+      background: none; border: none; padding: 0.4rem 0; font-family: inherit;
+    }
+    .nav-dropdown:hover .nav-drop-btn { opacity: 1; color: var(--gold-light); }
+    .nav-drop-arrow { font-size: 0.55rem; transition: transform 0.25s; display: inline-block; }
+    .nav-dropdown:hover .nav-drop-arrow { transform: rotate(180deg); }
+    .nav-drop-menu {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      padding-top: 14px; opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.2s, visibility 0.2s; z-index: 200;
+    }
+    .nav-dropdown:hover .nav-drop-menu { opacity: 1; visibility: visible; pointer-events: all; }
+    .nav-drop-menu-inner {
+      background: rgba(13,27,62,0.98); backdrop-filter: blur(20px);
+      border: 1px solid var(--gold-border); min-width: 210px; position: relative;
+    }
+    .nav-drop-menu-inner::before {
+      content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      width: 8px; height: 8px; background: var(--gold); clip-path: polygon(50% 0%, 100% 100%, 0 100%);
+    }
+    .drop-item {
+      display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem;
+      cursor: pointer; border-bottom: 1px solid rgba(212,160,23,0.08);
+      transition: background 0.18s; text-decoration: none;
+    }
+    .drop-item:last-child { border-bottom: none; }
+    .drop-item:hover { background: var(--gold-muted); }
+    .drop-item-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .drop-item-text { font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.82; color: var(--white); }
+    .drop-item:hover .drop-item-text { opacity: 1; color: var(--gold-light); }
+
+    /* ===== PAGE HERO ===== */
+    .page-hero {
+      padding: 9rem 3.5rem 4rem;
+      background: var(--navy-mid);
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(0deg,  rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px);
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+      font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em;
+      color: var(--gold); opacity: 0.65; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
     .breadcrumb a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
     .breadcrumb a:hover { opacity: 1; }
     .breadcrumb span { opacity: 0.45; }
-    .page-hero-bg{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(212,160,23,0.03) 0,rgba(212,160,23,0.03) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(212,160,23,0.03) 0,rgba(212,160,23,0.03) 1px,transparent 1px,transparent 80px);}
-    .page-hero-content{position:relative;z-index:1;}
-    .section-tag{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:0.7rem;}
-    .section-tag::before{content:'';width:22px;height:1px;background:var(--gold);}
-    h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);line-height:0.95;letter-spacing:0.02em;}
-    h1 em{font-style:normal;color:var(--gold-light);}
-    .page-hero p{margin-top:1.2rem;font-size:1rem;line-height:1.75;opacity:0.6;max-width:600px;}
+    .section-tag {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .section-tag::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem,6vw,5.5rem); line-height: 0.95; letter-spacing: 0.02em; }
+    h1 em { font-style: normal; color: var(--gold-light); }
+    .page-hero p { margin-top: 1.2rem; font-size: 1rem; line-height: 1.75; opacity: 0.6; max-width: 600px; }
 
-    .fasilitas-section{background:var(--navy);padding:4rem 3.5rem 6rem;}
-    .fasilitas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}
-    /* 11 item: row 3 punya 3 card, kolom 4 kosong */
-    .fasilitas-grid .fasilitas-item:nth-child(9){grid-column:1;}
-    .fasilitas-grid .fasilitas-item:nth-child(10){grid-column:2;}
-    .fasilitas-grid .fasilitas-item:nth-child(11){grid-column:3;}
-    .fasilitas-item{background:var(--navy-card);padding:2.2rem 1.8rem;text-align:center;border-bottom:2px solid transparent;transition:border-color 0.2s,background 0.2s;}
-    .fasilitas-item:hover{border-color:var(--gold);background:var(--navy-light);}
-    .fasilitas-icon{font-size:2.2rem;margin-bottom:1.1rem;}
-    .fasilitas-name{font-size:0.9rem;font-weight:600;letter-spacing:0.04em;margin-bottom:0.5rem;}
-    .fasilitas-desc{font-size:0.78rem;opacity:0.5;line-height:1.6;}
+    /* ===== FASILITAS SECTION ===== */
+    .fasilitas-section { background: var(--navy-mid); padding: 4rem 3.5rem 6rem; }
 
-    footer{background:var(--navy-card);border-top:1px solid var(--gold-border);padding:2.5rem 3.5rem;}
-    .footer-inner{display:flex;align-items:center;justify-content:space-between;}
-    .footer-left-logo{display:flex;align-items:center;gap:1rem;}
-    .footer-left-logo img{width:40px;height:40px;border-radius:50%;opacity:0.85;filter:drop-shadow(0 0 4px rgba(212,160,23,0.3));}
-    .footer-text{font-size:0.76rem;opacity:0.4;line-height:1.65;}
-    .footer-text strong{color:var(--gold-light);opacity:0.9;font-size:0.82rem;display:block;}
-    .footer-links{display:flex;gap:2rem;}
-    .footer-links a{text-decoration:none;color:var(--white);opacity:0.38;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;transition:opacity 0.2s,color 0.2s;}
-    .footer-links a:hover{opacity:1;color:var(--gold);}
-    .footer-bottom{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(212,160,23,0.1);text-align:center;font-size:0.68rem;opacity:0.3;letter-spacing:0.08em;font-family:'Space Mono',monospace;}
+    /*
+      FIX: Ganti grid 4-kolom fixed + nth-child hack menjadi auto-fill.
+      11 item dalam 4 kolom → baris terakhir hanya 3 card, kolom ke-4 kosong.
+      Dengan auto-fill + minmax, card otomatis mengisi ruang tanpa celah.
+    */
+    .fasilitas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+      gap: 1px;
+    }
 
-    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
-    .reveal.visible{opacity:1;transform:translateY(0);}
+    .fasilitas-item {
+      background: var(--navy-card);
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .fasilitas-item:hover { border-color: var(--gold); background: var(--navy-light); }
+    .fasilitas-icon { font-size: 2.2rem; margin-bottom: 1.1rem; }
+    .fasilitas-name { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .fasilitas-desc { font-size: 0.78rem; opacity: 0.5; line-height: 1.6; }
 
-    @media(max-width:960px){
-      nav{padding:1rem 1.5rem;}
-      nav ul{gap:1.2rem;}
-      .page-hero{padding:7rem 1.5rem 3rem;}
-      .fasilitas-section{padding:3rem 1.5rem 4rem;}
-      .fasilitas-grid{grid-template-columns:repeat(2,1fr);}
-      .fasilitas-grid .fasilitas-item:nth-child(9),
-      .fasilitas-grid .fasilitas-item:nth-child(10),
-      .fasilitas-grid .fasilitas-item:nth-child(11){grid-column:auto;}
-      .footer-inner{flex-direction:column;gap:1.5rem;text-align:center;}
+    /* ===== FOOTER ===== */
+    footer { background: var(--navy-card); border-top: 1px solid var(--gold-border); padding: 2.5rem 3.5rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-left-logo { display: flex; align-items: center; gap: 1rem; }
+    .footer-left-logo img { width: 40px; height: 40px; border-radius: 50%; opacity: 0.85; filter: drop-shadow(0 0 4px rgba(212,160,23,0.3)); }
+    .footer-text { font-size: 0.76rem; opacity: 0.4; line-height: 1.65; }
+    .footer-text strong { color: var(--gold-light); opacity: 0.9; font-size: 0.82rem; display: block; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      text-decoration: none; color: var(--white); opacity: 0.38;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .footer-links a:hover { opacity: 1; color: var(--gold); }
+    .footer-bottom {
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(212,160,23,0.1);
+      text-align: center; font-size: 0.68rem; opacity: 0.3;
+      letter-spacing: 0.08em; font-family: 'Space Mono', monospace;
+    }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* Tablet ≤960px */
+    @media (max-width: 960px) {
+      nav { padding: 0.85rem 1.5rem; }
+      nav ul { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+
+      .page-hero { padding: 6rem 1.5rem 3rem; }
+      .page-hero p { font-size: 0.9rem; }
+
+      .fasilitas-section { padding: 3rem 1.5rem 4rem; }
+
+      footer { padding: 2rem 1.5rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-left-logo { justify-content: center; }
+      .footer-links { justify-content: center; gap: 1.2rem; }
+    }
+
+    /* Mobile ≤600px */
+    @media (max-width: 600px) {
+      nav { padding: 0.75rem 1rem; }
+      .nav-logo img { width: 36px; height: 36px; }
+      .nav-title { font-size: 0.6rem; }
+
+      .page-hero { padding: 5rem 1rem 2.5rem; }
+      h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+      .page-hero p { font-size: 0.85rem; max-width: 100%; }
+      .breadcrumb { font-size: 0.55rem; gap: 0.4rem; }
+
+      .fasilitas-section { padding: 2rem 1rem 3rem; }
+
+      /* 2 kolom di mobile */
+      .fasilitas-grid { grid-template-columns: repeat(2, 1fr); }
+      .fasilitas-item { padding: 1.5rem 1rem; }
+      .fasilitas-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+      .fasilitas-name { font-size: 0.82rem; }
+      .fasilitas-desc { font-size: 0.72rem; }
+
+      footer { padding: 1.8rem 1rem; }
+      .footer-links { gap: 0.8rem; }
+      .footer-links a { font-size: 0.65rem; }
+    }
+
+    /* Very small ≤380px */
+    @media (max-width: 380px) {
+      h1 { font-size: 2rem; }
+      /* 1 kolom di layar sangat kecil */
+      .fasilitas-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+<!-- ========== NAV ========== -->
 <nav>
   <a class="nav-logo" href="index.html">
     <img src="image/logo.png" alt="Logo" />
     <div class="nav-title">Lembaga Pemasyarakatan<span>Narkotika Jakarta</span></div>
   </a>
+
+  <!-- Desktop nav -->
   <ul>
     <li class="nav-dropdown">
       <button class="nav-drop-btn">Profil <span class="nav-drop-arrow">▼</span></button>
@@ -108,57 +281,153 @@
     <li><a href="berita.html">Berita</a></li>
     <li><a href="index.html#kontak">Kontak</a></li>
   </ul>
+
+  <!-- Hamburger button -->
+  <button class="nav-hamburger" id="hamburger" aria-label="Buka menu navigasi">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- Mobile drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-section-label">Profil</div>
+  <a class="sub" href="sejarah.html">🏛️ &nbsp;Sejarah</a>
+  <a class="sub" href="visimisi.html">🎯 &nbsp;Visi & Misi</a>
+  <a class="sub" href="struktur.html">🏢 &nbsp;Struktur Organisasi</a>
+  <div class="mobile-section-label" style="margin-top:0.8rem;"></div>
+  <a href="program.html">Program</a>
+  <a class="active-page" href="fasilitas.html">Fasilitas</a>
+  <a href="berita.html">Berita</a>
+  <a href="index.html#kontak">Kontak</a>
+</div>
+
+<!-- ========== PAGE HERO ========== -->
 <div class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-content">
     <div class="breadcrumb">
       <a href="index.html">Beranda</a>
       <span>›</span>
-      <span>Profil</span>
-      <span>›</span>
       <span style="color:var(--white);opacity:0.85;">Fasilitas</span>
     </div>
     <div class="section-tag">Sarana & Prasarana</div>
-    <h1>Fasilitas</h1>
+    <h1>Fasilitas <em>Unggulan</em></h1>
     <p>Lapas Narkotika Kelas IIA Jakarta dilengkapi dengan berbagai fasilitas modern yang mendukung proses rehabilitasi, pembinaan, dan pengembangan diri warga binaan secara menyeluruh.</p>
   </div>
 </div>
 
+<!-- ========== FASILITAS SECTION ========== -->
 <div class="fasilitas-section">
   <div class="fasilitas-grid reveal">
-    <div class="fasilitas-item"><div class="fasilitas-icon">🏥</div><div class="fasilitas-name">Fasilitas Rehabilitasi</div><div class="fasilitas-desc">Layanan rehabilitasi medis dan sosial terpadu bagi warga binaan kasus narkotika</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🔧</div><div class="fasilitas-name">Balai Latihan Kerja</div><div class="fasilitas-desc">Tempat pelatihan mekanik, bakery, kerajinan tangan, tata busana, hingga komputer</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🌾</div><div class="fasilitas-name">Sarana Asimilasi & Edukasi</div><div class="fasilitas-desc">Area pembinaan kerja dan edukasi yang berisi peternakan serta pertanian</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🐟</div><div class="fasilitas-name">Budidaya Perikanan & Peternakan</div><div class="fasilitas-desc">Budidaya ikan lele, patin, ayam petelur, bebek hibrida, serta maggot BSF</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🌿</div><div class="fasilitas-name">Perkebunan & Pertanian</div><div class="fasilitas-desc">Bercocok tanam sayuran dan pembelajaran agribisnis bagi warga binaan</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🩺</div><div class="fasilitas-name">Fasilitas Kesehatan</div><div class="fasilitas-desc">Pemeriksaan kesehatan dan layanan rehabilitasi warga binaan</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🕌</div><div class="fasilitas-name">Tempat Ibadah</div><div class="fasilitas-desc">Fasilitas ibadah berbagai agama: masjid, gereja, dan vihara</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">📚</div><div class="fasilitas-name">Perpustakaan & Ruang Belajar</div><div class="fasilitas-desc">Digunakan untuk pembinaan intelektual dan pendidikan warga binaan</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🖥️</div><div class="fasilitas-name">Layanan TI & Self Service</div><div class="fasilitas-desc">Layanan SDP, informasi, dan self-service untuk warga binaan</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">🍽️</div><div class="fasilitas-name">Dapur & Penyajian Makanan</div><div class="fasilitas-desc">Fasilitas pengolahan dan penyajian makanan bergizi bagi warga binaan</div></div>
-    <div class="fasilitas-item"><div class="fasilitas-icon">👨‍👩‍👧</div><div class="fasilitas-name">Fasilitas Kunjungan</div><div class="fasilitas-desc">Area pelayanan kunjungan keluarga dan layanan terpadu terstandarisasi</div></div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🏥</div>
+      <div class="fasilitas-name">Fasilitas Rehabilitasi</div>
+      <div class="fasilitas-desc">Layanan rehabilitasi medis dan sosial terpadu bagi warga binaan kasus narkotika</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🔧</div>
+      <div class="fasilitas-name">Balai Latihan Kerja</div>
+      <div class="fasilitas-desc">Tempat pelatihan mekanik, bakery, kerajinan tangan, tata busana, hingga komputer</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🌾</div>
+      <div class="fasilitas-name">Sarana Asimilasi & Edukasi</div>
+      <div class="fasilitas-desc">Area pembinaan kerja dan edukasi yang berisi peternakan serta pertanian</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🐟</div>
+      <div class="fasilitas-name">Budidaya Perikanan & Peternakan</div>
+      <div class="fasilitas-desc">Budidaya ikan lele, patin, ayam petelur, bebek hibrida, serta maggot BSF</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🌿</div>
+      <div class="fasilitas-name">Perkebunan & Pertanian</div>
+      <div class="fasilitas-desc">Bercocok tanam sayuran dan pembelajaran agribisnis bagi warga binaan</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🩺</div>
+      <div class="fasilitas-name">Fasilitas Kesehatan</div>
+      <div class="fasilitas-desc">Pemeriksaan kesehatan dan layanan rehabilitasi warga binaan</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🕌</div>
+      <div class="fasilitas-name">Tempat Ibadah</div>
+      <div class="fasilitas-desc">Fasilitas ibadah berbagai agama: masjid, gereja, dan vihara</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">📚</div>
+      <div class="fasilitas-name">Perpustakaan & Ruang Belajar</div>
+      <div class="fasilitas-desc">Digunakan untuk pembinaan intelektual dan pendidikan warga binaan</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🖥️</div>
+      <div class="fasilitas-name">Layanan TI & Self Service</div>
+      <div class="fasilitas-desc">Layanan SDP, informasi, dan self-service untuk warga binaan</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">🍽️</div>
+      <div class="fasilitas-name">Dapur & Penyajian Makanan</div>
+      <div class="fasilitas-desc">Fasilitas pengolahan dan penyajian makanan bergizi bagi warga binaan</div>
+    </div>
+    <div class="fasilitas-item">
+      <div class="fasilitas-icon">👨‍👩‍👧</div>
+      <div class="fasilitas-name">Fasilitas Kunjungan</div>
+      <div class="fasilitas-desc">Area pelayanan kunjungan keluarga dan layanan terpadu terstandarisasi</div>
+    </div>
   </div>
 </div>
 
+<!-- ========== FOOTER ========== -->
 <footer>
   <div class="footer-inner">
     <div class="footer-left-logo">
       <img src="image/logo.png" alt="Logo" />
-      <div class="footer-text"><strong>Lapas Narkotika Kelas IIA Jakarta</strong>Kementerian Imigrasi dan Pemasyarakatan RI<br>Melayani dengan Integritas · Membina dengan Kemanusiaan</div>
+      <div class="footer-text">
+        <strong>Lapas Narkotika Kelas IIA Jakarta</strong>
+        Kementerian Imigrasi dan Pemasyarakatan RI<br>
+        Melayani dengan Integritas · Membina dengan Kemanusiaan
+      </div>
     </div>
     <div class="footer-links">
-      <a href="#">Kemenkumham</a><a href="#">Ditjen PAS</a><a href="#">PPID</a><a href="#">Pengaduan</a>
+      <a href="https://kemenkumham.go.id"              target="_blank" rel="noopener">Kemenkumham</a>
+      <a href="https://ditjenpas.go.id"                target="_blank" rel="noopener">Ditjen PAS</a>
+      <a href="https://ppid.kemenkumham.go.id"         target="_blank" rel="noopener">PPID</a>
+      <a href="https://layanan.kemenkumham.go.id/pengaduan" target="_blank" rel="noopener">Pengaduan</a>
     </div>
   </div>
   <div class="footer-bottom">© 2026 Fasum & BMN — Semua Hak Dilindungi</div>
 </footer>
 
 <script>
-  const reveals=document.querySelectorAll('.reveal');
-  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.10});
-  reveals.forEach(r=>io.observe(r));
+  /* ---- Mobile Menu ---- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ---- Reveal on scroll ---- */
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => io.observe(r));
 </script>
 </body>
 </html>
