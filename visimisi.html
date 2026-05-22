@@ -21,6 +21,7 @@
     html { scroll-behavior: smooth; }
     body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
 
+    /* ===== NAVBAR ===== */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -32,9 +33,57 @@
     .nav-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; filter: drop-shadow(0 0 8px rgba(212,160,23,0.5)); }
     .nav-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); line-height: 1.35; }
     .nav-title span { color: var(--gold-light); display: block; }
+
+    /* Desktop nav links */
     nav ul { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
     nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
     nav ul a:hover { opacity: 1; color: var(--gold-light); }
+
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px; width: 36px; height: 36px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--gold-light); border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 99;
+      background: rgba(13,27,62,0.98);
+      padding: 5.5rem 2rem 2rem;
+      flex-direction: column; gap: 0;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      display: block; padding: 1rem 0;
+      text-decoration: none; color: var(--white);
+      font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400;
+      border-bottom: 1px solid rgba(212,160,23,0.1);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a.active-page { color: var(--gold-light); }
+    .mobile-menu .mobile-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.7;
+      text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.3rem;
+    }
+    .mobile-menu a.sub { padding-left: 1rem; font-size: 0.95rem; opacity: 0.8; }
+
+    /* Dropdown (desktop) */
     .nav-dropdown { position: relative; }
     .nav-drop-btn { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; text-decoration: none; color: var(--gold-light); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 1; background: none; border: none; padding: 0.4rem 0; font-family: inherit; transition: opacity 0.2s; }
     .nav-drop-arrow { font-size: 0.55rem; transition: transform 0.25s; display: inline-block; }
@@ -50,7 +99,7 @@
     .drop-item-text { font-size: 0.75rem; letter-spacing: 0.06em; opacity: 0.82; color: var(--white); }
     .drop-item:hover .drop-item-text, .drop-item.active-page .drop-item-text { opacity: 1; color: var(--gold-light); }
 
-    /* PAGE HERO */
+    /* ===== PAGE HERO ===== */
     .page-hero {
       min-height: 52vh; display: flex; align-items: flex-end;
       padding: 0 3.5rem 4rem; padding-top: 100px;
@@ -59,22 +108,21 @@
     }
     .page-hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 80% at 100% 50%, rgba(212,160,23,0.07), transparent 60%), radial-gradient(ellipse 40% 60% at 0% 100%, rgba(30,47,94,0.6), transparent 60%); }
     .page-hero-grid { position: absolute; inset: 0; z-index: 0; background-image: repeating-linear-gradient(90deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, rgba(212,160,23,0.03) 0, rgba(212,160,23,0.03) 1px, transparent 1px, transparent 80px); }
-    .page-hero-watermark { position: absolute; right: -2rem; bottom: -2rem; z-index: 0; font-family: 'Bebas Neue', sans-serif; font-size: clamp(8rem, 18vw, 16rem); color: rgba(212,160,23,0.05); line-height: 1; pointer-events: none; user-select: none; white-space: nowrap; }
     .page-hero-content { position: relative; z-index: 1; }
-    .breadcrumb { display: flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.65; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.65; text-transform: uppercase; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .breadcrumb a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
     .breadcrumb a:hover { opacity: 1; }
     .breadcrumb span { opacity: 0.45; }
     .page-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
     .page-tag::before { content:''; width:22px; height:1px; background:var(--gold); }
-    .page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.92; letter-spacing: 0.02em; }
+    .page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 6vw, 5.5rem); line-height: 0.92; letter-spacing: 0.02em; }
     .page-hero h1 em { font-style: normal; color: var(--gold-light); }
     .page-hero-sub { margin-top: 1.2rem; font-size: 0.98rem; opacity: 0.55; max-width: 520px; line-height: 1.7; }
 
-    /* CONTENT */
+    /* ===== CONTENT ===== */
     .content-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 3.5rem; }
 
-    /* VISI CARD — besar & statement */
+    /* VISI */
     .visi-card {
       background: var(--navy-card);
       border-top: 4px solid var(--gold);
@@ -87,14 +135,14 @@
     .visi-label::before { content:''; width:18px; height:1px; background:var(--gold); }
     .visi-quote {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
-      line-height: 1.1; letter-spacing: 0.03em;
+      font-size: clamp(1.5rem, 3.5vw, 3rem);
+      line-height: 1.15; letter-spacing: 0.03em;
       color: var(--white);
       max-width: 800px;
     }
     .visi-quote em { font-style: normal; color: var(--gold-light); }
 
-    /* MISI CARDS */
+    /* MISI */
     .misi-header { background: var(--navy-mid); padding: 2.8rem 4rem; border-top: 4px solid var(--gold); position: relative; overflow: hidden; margin-bottom: 1px; }
     .misi-header::before { content: '02'; position: absolute; right: 2rem; top: 1rem; font-family: 'Bebas Neue', sans-serif; font-size: 8rem; color: rgba(212,160,23,0.06); line-height: 1; }
     .misi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
@@ -106,11 +154,10 @@
     }
     .misi-card:hover { background: var(--navy-light); }
     .misi-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: rgba(212,160,23,0.15); line-height: 1; flex-shrink: 0; width: 52px; text-align: center; padding-top: 2px; }
-    .misi-content {}
     .misi-arrow { color: var(--gold); font-family: 'Space Mono', monospace; font-size: 1.2rem; margin-bottom: 0.6rem; display: block; }
     .misi-text { font-size: 0.95rem; line-height: 1.75; opacity: 0.72; }
 
-    /* NILAI-NILAI */
+    /* NILAI */
     .nilai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 4rem; }
     .nilai-card { background: var(--navy-card); padding: 2rem 1.8rem; text-align: center; border-bottom: 3px solid transparent; transition: border-color 0.25s, background 0.2s; }
     .nilai-card:hover { border-color: var(--gold); background: var(--navy-light); }
@@ -124,13 +171,14 @@
     .section-tag-inline { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
     .section-tag-inline::before { content:''; width:22px; height:1px; background:var(--gold); }
 
+    /* FOOTER */
     footer { background:var(--navy-card); border-top:1px solid var(--gold-border); padding:2.5rem 3.5rem; }
     .footer-inner { display:flex; align-items:center; justify-content:space-between; }
     .footer-left-logo { display:flex; align-items:center; gap:1rem; }
     .footer-left-logo img { width:40px; height:40px; border-radius:50%; opacity:0.85; filter:drop-shadow(0 0 4px rgba(212,160,23,0.3)); }
     .footer-text { font-size:0.76rem; opacity:0.4; line-height:1.65; }
     .footer-text strong { color:var(--gold-light); opacity:0.9; font-size:0.82rem; display:block; }
-    .footer-links { display:flex; gap:2rem; }
+    .footer-links { display:flex; gap:2rem; flex-wrap: wrap; }
     .footer-links a { text-decoration:none; color:var(--white); opacity:0.38; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; transition:opacity 0.2s, color 0.2s; }
     .footer-links a:hover { opacity:1; color:var(--gold); }
     .footer-bottom { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(212,160,23,0.1); text-align:center; font-size:0.68rem; opacity:0.3; letter-spacing:0.08em; font-family:'Space Mono',monospace; }
@@ -138,15 +186,76 @@
     .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
+    /* ===== RESPONSIVE: TABLET (max 960px) ===== */
     @media (max-width: 960px) {
-      nav { padding:1rem 1.5rem; }
-      nav ul { gap:1.2rem; }
-      .page-hero { padding:6rem 1.5rem 3rem; }
-      .content-wrap { padding:3rem 1.5rem; }
-      .visi-card, .misi-header { padding:2.2rem 1.8rem; }
+      nav { padding: 0.85rem 1.5rem; }
+      nav ul { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+
+      .page-hero { padding: 6rem 1.5rem 3rem; min-height: 45vh; }
+      .page-hero-sub { font-size: 0.9rem; }
+
+      .content-wrap { padding: 3rem 1.5rem; }
+      .visi-card { padding: 2.2rem 1.8rem; }
+      .misi-header { padding: 2rem 1.8rem; }
       .misi-grid { grid-template-columns: 1fr; }
+
       .nilai-grid { grid-template-columns: 1fr 1fr; }
-      .footer-inner { flex-direction:column; gap:1.5rem; text-align:center; }
+
+      footer { padding: 2rem 1.5rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-left-logo { justify-content: center; }
+      .footer-links { justify-content: center; gap: 1.2rem; }
+    }
+
+    /* ===== RESPONSIVE: MOBILE (max 600px) ===== */
+    @media (max-width: 600px) {
+      nav { padding: 0.75rem 1rem; }
+      .nav-logo img { width: 36px; height: 36px; }
+      .nav-title { font-size: 0.6rem; }
+
+      .page-hero { padding: 5rem 1rem 2.5rem; min-height: auto; }
+      .page-hero h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+      .page-hero-sub { font-size: 0.85rem; max-width: 100%; }
+      .breadcrumb { font-size: 0.55rem; gap: 0.4rem; }
+
+      .content-wrap { padding: 2rem 1rem; }
+
+      /* Visi card */
+      .visi-card { padding: 1.8rem 1.2rem; }
+      .visi-card::before { font-size: 5rem; right: 0.8rem; }
+      .visi-quote { font-size: clamp(1.3rem, 5.5vw, 2rem); }
+
+      /* Misi header */
+      .misi-header { padding: 1.6rem 1.2rem; }
+      .misi-header::before { font-size: 5rem; right: 0.8rem; }
+
+      /* Misi cards: single col, compact */
+      .misi-grid { grid-template-columns: 1fr; gap: 2px; }
+      .misi-card { padding: 1.4rem 1.2rem; gap: 1rem; }
+      .misi-num { font-size: 2.5rem; width: 38px; }
+      .misi-text { font-size: 0.9rem; }
+      .misi-arrow { font-size: 1rem; margin-bottom: 0.4rem; }
+
+      /* Nilai: single col on very small screens */
+      .nilai-grid { grid-template-columns: 1fr; margin-top: 2.5rem; }
+      .nilai-card { padding: 1.5rem 1.2rem; }
+
+      /* Section heads */
+      .section-head { font-size: clamp(1.5rem, 6vw, 2rem); }
+      .section-divider { margin: 0.4rem 0 1.8rem; }
+
+      footer { padding: 1.8rem 1rem; }
+      .footer-links { gap: 0.8rem; }
+      .footer-links a { font-size: 0.65rem; }
+    }
+
+    /* ===== RESPONSIVE: VERY SMALL (max 380px) ===== */
+    @media (max-width: 380px) {
+      .page-hero h1 { font-size: 2rem; }
+      .visi-quote { font-size: 1.25rem; }
+      .nilai-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -157,6 +266,8 @@
     <img src="image/logo.png" alt="Logo" />
     <div class="nav-title">Lembaga Pemasyarakatan<span>Narkotika Jakarta</span></div>
   </a>
+
+  <!-- Desktop nav -->
   <ul>
     <li class="nav-dropdown">
       <button class="nav-drop-btn">Profil <span class="nav-drop-arrow">▼</span></button>
@@ -170,7 +281,6 @@
             <div class="drop-item-icon">🎯</div>
             <div class="drop-item-text">Visi & Misi</div>
           </a>
-           <div class="nav-drop-menu-inner">
           <a class="drop-item" href="struktur.html">
             <div class="drop-item-icon">🏢</div>
             <div class="drop-item-text">Struktur Organisasi</div>
@@ -183,7 +293,25 @@
     <li><a href="berita.html">Berita</a></li>
     <li><a href="index.html#kontak">Kontak</a></li>
   </ul>
+
+  <!-- Hamburger button -->
+  <button class="nav-hamburger" id="hamburger" aria-label="Buka menu navigasi">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-section-label">Profil</div>
+  <a class="sub" href="sejarah.html">🏛️ &nbsp;Sejarah</a>
+  <a class="sub active-page" href="visimisi.html">🎯 &nbsp;Visi & Misi</a>
+  <a class="sub" href="struktur.html">🏢 &nbsp;Struktur Organisasi</a>
+  <div class="mobile-section-label" style="margin-top:0.8rem;"></div>
+  <a href="program.html">Program</a>
+  <a href="fasilitas.html">Fasilitas</a>
+  <a href="berita.html">Berita</a>
+  <a href="index.html#kontak">Kontak</a>
+</div>
 
 <!-- PAGE HERO -->
 <div class="page-hero">
@@ -206,7 +334,7 @@
 <!-- CONTENT -->
 <div class="content-wrap">
 
-  <!-- VISI -->
+  <!-- VISI & MISI -->
   <div class="reveal">
     <div class="visi-card">
       <div class="visi-label">01 — Visi</div>
@@ -215,7 +343,6 @@
       </div>
     </div>
 
-    <!-- MISI -->
     <div class="misi-header">
       <div class="visi-label">02 — Misi</div>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.04em;opacity:0.85;">Empat Pilar Pelayanan</div>
@@ -314,11 +441,31 @@
 </footer>
 
 <script>
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
-  },{threshold:0.08});
-  reveals.forEach(r=>io.observe(r));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => io.observe(r));
+
+  // Hamburger / mobile menu
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  btn.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  // Close menu on link click
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 </body>
 </html>
