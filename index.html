@@ -6,6 +6,10 @@
   <title>Lapas Narkotika Jakarta</title>
   <link rel="shortcut icon" href="image/logo-remove.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- ✅ FIX 1: EmailJS dimuat di <head> agar tersedia sebelum script inline -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <style>
     :root {
       --navy:        #0d1b3e;
@@ -38,7 +42,6 @@
     nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
     nav ul a:hover { opacity: 1; color: var(--gold-light); }
 
-    /* Hamburger — same pattern as sejarah.html */
     .nav-hamburger {
       display: none;
       flex-direction: column; justify-content: center; align-items: center;
@@ -54,7 +57,6 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* Mobile drawer — same pattern as sejarah.html */
     .mobile-menu {
       display: none;
       position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99;
@@ -81,7 +83,6 @@
     }
     .mobile-menu a.sub { padding-left: 1rem; font-size: 0.95rem; opacity: 0.8; }
 
-    /* Dropdown desktop */
     .nav-dropdown { position: relative; }
     .nav-drop-btn { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; background: none; border: none; padding: 0.4rem 0; font-family: inherit; transition: opacity 0.2s, color 0.2s; }
     .nav-dropdown:hover .nav-drop-btn { opacity: 1; color: var(--gold-light); }
@@ -169,6 +170,21 @@
     .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
     .form-textarea { resize: vertical; min-height: 120px; }
     .form-input::placeholder, .form-textarea::placeholder { opacity: 0.3; }
+    .kontak-toast {
+      display: none;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 1.4rem;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      border-left: 3px solid var(--gold);
+      background: var(--navy-card);
+      border: 1px solid var(--gold-border);
+      border-left-width: 3px;
+      transition: opacity 0.3s;
+    }
+    .kontak-toast.sukses { border-left-color: #4caf82; color: #a8f0c8; }
+    .kontak-toast.error  { border-left-color: #e05c5c; color: #f5a0a0; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ===== FOOTER ===== */
     footer { background: var(--navy-card); border-top: 1px solid var(--gold-border); padding: 2.5rem 3.5rem; }
@@ -202,48 +218,37 @@
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== TABLET (max 960px) ===== */
+    /* ===== TABLET ===== */
     @media (max-width: 960px) {
       nav { padding: 0.85rem 1.5rem; }
       nav ul { display: none; }
       .nav-hamburger { display: flex; }
       .mobile-menu { display: flex; }
-
-      #hero {
-        grid-template-columns: 1fr;
-        padding: 6rem 1.5rem 3rem;
-        min-height: auto;
-        text-align: center;
-      }
+      #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; min-height: auto; text-align: center; }
       .hero-visual { display: none; }
       .hero-sub { margin: 1.2rem auto 0; max-width: 100%; }
       .hero-cta { justify-content: center; }
       .hero-stats-bar { justify-content: center; }
       .stat-pill { flex: 1; min-width: 0; padding: 0.8rem 0.6rem; }
-
       section { padding: 4rem 1.5rem; }
       #highlights { padding: 4rem 1.5rem; }
       .shortcut-grid { grid-template-columns: 1fr; }
       .shortcut-card { border-bottom: 1px solid rgba(212,160,23,0.08); border-bottom-width: 0; border-left: 3px solid transparent; padding: 1.8rem 1.4rem; }
       .shortcut-card:hover { border-left-color: var(--gold); border-bottom-color: transparent; }
-
       .kontak-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
       .form-row { grid-template-columns: 1fr; }
-
       .modal-features { grid-template-columns: 1fr; }
-
       footer { padding: 2rem 1.5rem; }
       .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
       .footer-left-logo { justify-content: center; }
       .footer-links { justify-content: center; gap: 1.2rem; }
     }
 
-    /* ===== MOBILE (max 600px) ===== */
+    /* ===== MOBILE ===== */
     @media (max-width: 600px) {
       nav { padding: 0.75rem 1rem; }
       .nav-logo img { width: 36px; height: 36px; }
       .nav-title { font-size: 0.6rem; }
-
       #hero { padding: 5rem 1rem 2.5rem; }
       h1 { font-size: clamp(2.8rem, 11vw, 4rem); }
       .hero-tagline { font-size: 0.55rem; letter-spacing: 0.14em; }
@@ -254,27 +259,22 @@
       .hero-stats-bar { gap: 0; margin-top: 2rem; }
       .stat-num { font-size: 1.6rem; }
       .stat-label { font-size: 0.5rem; }
-
       section { padding: 3rem 1rem; }
       #highlights { padding: 3rem 1rem; }
       h2 { font-size: clamp(2rem, 7vw, 3rem); }
-
       .kontak-info-item { gap: 1rem; }
       .kontak-info-icon { width: 38px; height: 38px; font-size: 1rem; }
       .kontak-info-value { font-size: 0.85rem; }
-
       .modal-overlay { padding: 0.5rem; }
       .modal { max-height: 95vh; }
       .modal-title { font-size: 1.8rem; }
       .modal-body { padding: 1.2rem; }
       .modal-img-placeholder { height: 160px; }
-
       footer { padding: 1.8rem 1rem; }
       .footer-links { gap: 0.8rem; }
       .footer-links a { font-size: 0.65rem; }
     }
 
-    /* ===== VERY SMALL (max 380px) ===== */
     @media (max-width: 380px) {
       nav { padding: 0.65rem 0.8rem; }
       .nav-title { font-size: 0.55rem; }
@@ -299,8 +299,6 @@
       <span>Narkotika Jakarta</span>
     </div>
   </a>
-
-  <!-- Desktop nav -->
   <ul>
     <li class="nav-dropdown">
       <button class="nav-drop-btn">Profil <span class="nav-drop-arrow">▼</span></button>
@@ -317,8 +315,6 @@
     <li><a href="berita.html">Berita</a></li>
     <li><a href="index.html#kontak">Kontak</a></li>
   </ul>
-
-  <!-- Hamburger -->
   <button class="nav-hamburger" id="hamburger" aria-label="Buka menu navigasi">
     <span></span><span></span><span></span>
   </button>
@@ -426,16 +422,33 @@
       </div>
     </div>
     <div>
-      <div style="margin-bottom:1.5rem;opacity:0.58;font-size:0.88rem;line-height:1.75;">Sampaikan pertanyaan atau permohonan informasi melalui formulir berikut. Tim kami akan merespons dalam 1–2 hari kerja.</div>
+      <div style="margin-bottom:1.5rem;opacity:0.58;font-size:0.88rem;line-height:1.75;">
+        Sampaikan pertanyaan atau permohonan informasi melalui formulir berikut. Tim kami akan merespons dalam 1–2 hari kerja.
+      </div>
+
+      <!-- Toast notifikasi -->
+      <div id="kontakToast" class="kontak-toast"></div>
+
       <div class="kontak-form">
         <div class="form-row">
-          <div class="form-group"><label class="form-label">Nama Lengkap</label><input class="form-input" type="text" placeholder="Nama Anda" /></div>
-          <div class="form-group"><label class="form-label">No. Telepon</label><input class="form-input" type="tel" placeholder="08xx-xxxx-xxxx" /></div>
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap</label>
+            <input id="fNama" class="form-input" type="text" placeholder="Nama Anda" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">No. Telepon</label>
+            <input id="fTelp" class="form-input" type="tel" placeholder="08xx-xxxx-xxxx" />
+          </div>
         </div>
-        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="email@anda.com" /></div>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input id="fEmail" class="form-input" type="email" placeholder="email@anda.com" />
+        </div>
+
         <div class="form-group">
           <label class="form-label">Keperluan</label>
-          <select class="form-input" style="cursor:pointer">
+          <select id="fKeperluan" class="form-input" style="cursor:pointer">
             <option value="" disabled selected>Pilih keperluan...</option>
             <option>Informasi Kunjungan Keluarga</option>
             <option>Status Warga Binaan</option>
@@ -445,8 +458,16 @@
             <option>Lainnya</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Pesan</label><textarea class="form-textarea" placeholder="Tuliskan pesan atau pertanyaan Anda di sini..."></textarea></div>
-        <button class="btn-primary" onclick="alert('Terima kasih. Pesan Anda telah terkirim. Tim kami akan segera merespons.')" style="width:100%;text-align:center;padding:1rem;">Kirim Pesan</button>
+
+        <div class="form-group">
+          <label class="form-label">Pesan</label>
+          <textarea id="fPesan" class="form-textarea" placeholder="Tuliskan pesan atau pertanyaan Anda di sini..."></textarea>
+        </div>
+
+        <button id="btnKirim" class="btn-primary" onclick="kirimPesan()"
+                style="width:100%;text-align:center;padding:1rem;">
+          Kirim Pesan
+        </button>
       </div>
     </div>
   </div>
@@ -488,16 +509,14 @@
 </div>
 
 <script>
-  /* ---- Mobile Menu (sama persis pola sejarah.html) ---- */
+  /* ---- Mobile Menu ---- */
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-
   hamburger.addEventListener('click', () => {
     const isOpen = mobileMenu.classList.toggle('open');
     hamburger.classList.toggle('open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
-
   mobileMenu.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       mobileMenu.classList.remove('open');
@@ -505,6 +524,89 @@
       document.body.style.overflow = '';
     });
   });
+
+  /* ============================================================
+     ✅ FIX 2: Konfigurasi EmailJS
+     Ganti nilai di bawah sesuai dashboard EmailJS kamu
+  ============================================================ */
+  const EJS_PUBLIC_KEY  = 'oprveIC_938tf2iwb';   // Account → Public Key
+  const EJS_SERVICE_ID  = 'service_51jko96';     // Email Services → Service ID
+  const EJS_TEMPLATE_ID = 'template_opci7su';    // Email Templates → Template ID
+
+  // Inisialisasi EmailJS
+  emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+
+  /* ============================================================
+     ✅ FIX 3: Fungsi kirimPesan — variabel diselaraskan dengan
+     template EmailJS: {{name}}, {{telp}}, {{email}},
+     {{keperluan}}, {{message}}, {{time}}
+  ============================================================ */
+  async function kirimPesan() {
+    const nama      = document.getElementById('fNama').value.trim();
+    const telp      = document.getElementById('fTelp').value.trim();
+    const email     = document.getElementById('fEmail').value.trim();
+    const keperluan = document.getElementById('fKeperluan').value;
+    const pesan     = document.getElementById('fPesan').value.trim();
+    const btn       = document.getElementById('btnKirim');
+
+    // Validasi
+    if (!nama || !email || !keperluan || !pesan) {
+      tampilToast('Mohon lengkapi semua field yang wajib diisi (Nama, Email, Keperluan, dan Pesan).', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      tampilToast('Format email tidak valid. Periksa kembali alamat email Anda.', 'error');
+      return;
+    }
+
+    // ✅ FIX: Generate timestamp sebelum dikirim
+    const time = new Date().toLocaleString('id-ID', {
+      weekday: 'long', year: 'numeric', month: 'long',
+      day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    btn.disabled = true;
+    btn.textContent = 'Mengirim...';
+
+    try {
+      // ✅ FIX: Nama variabel disesuaikan dengan {{...}} di template EmailJS
+      await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+        name:      nama,          // → {{name}}
+        telp:      telp || '-',   // → {{telp}}
+        email:     email,         // → {{email}}
+        keperluan: keperluan,     // → {{keperluan}}
+        message:   pesan,         // → {{message}}
+        time:      time,          // → {{time}}
+      });
+
+      tampilToast('✓ Pesan Anda berhasil dikirim! Tim kami akan merespons dalam 1–2 hari kerja.', 'sukses');
+      resetForm();
+
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      tampilToast('Gagal mengirim pesan. Silakan coba lagi atau hubungi kami langsung.', 'error');
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Kirim Pesan';
+  }
+
+  function resetForm() {
+    ['fNama','fTelp','fEmail','fPesan'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('fKeperluan').selectedIndex = 0;
+  }
+
+  function tampilToast(msg, tipe = 'sukses') {
+    const t = document.getElementById('kontakToast');
+    t.textContent   = msg;
+    t.className     = `kontak-toast ${tipe}`;
+    t.style.display = 'block';
+    if (tipe === 'error') {
+      setTimeout(() => { t.style.display = 'none'; }, 6000);
+    }
+  }
 
   /* ---- Modal Data ---- */
   const programs = {
@@ -574,5 +676,6 @@
   const navLinks = document.querySelectorAll('nav ul a');
   window.addEventListener('scroll', ()=>{ let current=''; sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120) current=s.id;}); navLinks.forEach(a=>{const active=a.getAttribute('href')==='#'+current; a.style.color=active?'var(--gold-light)':''; a.style.opacity=active?'1':''; }); });
 </script>
+
 </body>
 </html>
