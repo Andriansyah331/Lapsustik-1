@@ -164,6 +164,11 @@
     @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
+    /* ===== PARTICLES ===== */
+#particleCanvas { opacity: 0; transition: opacity 0.3s; }
+.coin-flip-wrap:hover ~ #particleCanvas,
+.logo-showcase:has(.coin-flip-wrap:hover) #particleCanvas { opacity: 1; }
+
     /* ===== SECTIONS ===== */
     section { padding: 6rem 3.5rem; }
     .section-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
@@ -252,6 +257,59 @@
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* ===== TYPEWRITER ===== */
+.typewriter-line {
+  display: inline-block;
+  border-right: 3px solid var(--gold-light);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: none;
+  vertical-align: bottom;
+}
+.typewriter-line.typing {
+  animation: blinkCursor 0.7s step-end infinite;
+}
+.typewriter-line.done {
+  border-right: none;
+}
+@keyframes blinkCursor {
+  0%, 100% { border-right-color: var(--gold-light); }
+  50%       { border-right-color: transparent; }
+}
+
+/* ===== PARALLAX ===== */
+.hero-bg, .hero-bg-grid {
+  will-change: transform;
+  transition: none;
+}
+
+/* ===== STAGGER CARDS ===== */
+.stagger-card {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.55s ease, transform 0.55s ease,
+              border-color 0.2s, background 0.2s;
+}
+.stagger-card.stagger-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RIPPLE ===== */
+.ripple-btn { position: relative; overflow: hidden; }
+.ripple-btn .ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(13, 27, 62, 0.25);
+  transform: scale(0);
+  animation: rippleAnim 0.55s linear;
+  pointer-events: none;
+}
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
     /* ===== TABLET ===== */
     @media (max-width: 960px) {
       nav { padding: 0.85rem 1.5rem; }
@@ -325,6 +383,7 @@
 
 <!-- ========== NAV ========== -->
 <nav>
+  <div id="scrollProgress" style="position:fixed;top:0;left:0;height:2.5px;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));z-index:200;transition:width 0.1s linear;pointer-events:none;box-shadow:0 0 8px rgba(212,160,23,0.6);"></div>
   <a class="nav-logo" href="index.html">
     <img src="image/logo.png" alt="Logo Kementerian Imigrasi dan Pemasyarakatan RI" />
     <div class="nav-title">
@@ -372,7 +431,11 @@
   <div class="hero-bg-grid"></div>
   <div class="hero-content">
     <div class="hero-badge"><div class="hero-badge-dot"></div>Kementerian Imigrasi & Pemasyarakatan RI</div>
-    <h1>Lapas<br><em>Narkotika</em><br>Jakarta</h1>
+    <h1>
+  <span class="typewriter-line" id="tw1"></span><br>
+  <em><span class="typewriter-line" id="tw2"></span></em><br>
+  <span class="typewriter-line" id="tw3"></span>
+</h1>
     <div class="hero-tagline">Lembaga Pemasyarakatan Narkotika Kelas IIA Jakarta</div>
     <p class="hero-sub">Pusat rehabilitasi, pembinaan, dan reintegrasi sosial bagi warga binaan kasus narkotika di wilayah DKI Jakarta di bawah naungan Kementerian Imigrasi dan Pemasyarakatan Republik Indonesia.</p>
     <div class="hero-cta">
@@ -380,15 +443,16 @@
       <a href="index.html#kontak" class="btn-outline">Hubungi Kami</a>
     </div>
     <div class="hero-stats-bar">
-      <div class="stat-pill"><div class="stat-num">2001</div><div class="stat-label">Warga Binaan</div></div>
-      <div class="stat-pill"><div class="stat-num">8</div><div class="stat-label">Program Utama</div></div>
-      <div class="stat-pill"><div class="stat-num">24/7</div><div class="stat-label">Pelayanan</div></div>
-    </div>
+  <div class="stat-pill"><div class="stat-num" data-target="2001" data-suffix="">0</div><div class="stat-label">Warga Binaan</div></div>
+  <div class="stat-pill"><div class="stat-num" data-target="8" data-suffix="">0</div><div class="stat-label">Program Utama</div></div>
+  <div class="stat-pill"><div class="stat-num" data-target="24" data-suffix="/7">0</div><div class="stat-label">Pelayanan</div></div>
+</div>
   </div>
 
   <!-- HERO VISUAL — Coin Flip -->
   <div class="hero-visual">
     <div class="logo-showcase">
+      <canvas id="particleCanvas" style="position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);pointer-events:none;z-index:3;"></canvas>
       <div class="logo-ring-1"></div>
       <div class="logo-ring-2"></div>
       <div class="coin-flip-wrap">
@@ -410,29 +474,29 @@
   <div class="section-tag">Jelajahi Lebih Lanjut</div>
   <h2>Temukan <em>Informasi</em></h2>
   <div class="section-divider"></div>
-  <div class="shortcut-grid reveal">
-    <a href="program.html" class="shortcut-card">
-      <div class="shortcut-emoji">📋</div>
-      <div class="shortcut-num">8 Program Unggulan</div>
-      <div class="shortcut-title">Program Pembinaan</div>
-      <p class="shortcut-desc">Rehabilitasi, vokasional, pendidikan, spiritual, hingga reintegrasi sosial untuk warga binaan.</p>
-      <div class="shortcut-more">Lihat semua program →</div>
-    </a>
-    <a href="fasilitas.html" class="shortcut-card">
-      <div class="shortcut-emoji">🏛️</div>
-      <div class="shortcut-num">11 Fasilitas</div>
-      <div class="shortcut-title">Sarana & Prasarana</div>
-      <p class="shortcut-desc">BLK, SAE, budidaya perikanan, perpustakaan, tempat ibadah, dan fasilitas kunjungan terpadu.</p>
-      <div class="shortcut-more">Lihat semua fasilitas →</div>
-    </a>
-    <a href="berita.html" class="shortcut-card">
-      <div class="shortcut-emoji">📰</div>
-      <div class="shortcut-num">Informasi Terkini</div>
-      <div class="shortcut-title">Berita & Pengumuman</div>
-      <p class="shortcut-desc">Update terbaru kegiatan, kerjasama, dan pengumuman resmi Lapas Narkotika Jakarta.</p>
-      <div class="shortcut-more">Lihat semua berita →</div>
-    </a>
-  </div>
+  <div class="shortcut-grid">
+  <a href="program.html" class="shortcut-card stagger-card">
+    <div class="shortcut-emoji">📋</div>
+    <div class="shortcut-num">8 Program Unggulan</div>
+    <div class="shortcut-title">Program Pembinaan</div>
+    <p class="shortcut-desc">Rehabilitasi, vokasional, pendidikan, spiritual, hingga reintegrasi sosial untuk warga binaan.</p>
+    <div class="shortcut-more">Lihat semua program →</div>
+  </a>
+  <a href="fasilitas.html" class="shortcut-card stagger-card">
+    <div class="shortcut-emoji">🏛️</div>
+    <div class="shortcut-num">11 Fasilitas</div>
+    <div class="shortcut-title">Sarana & Prasarana</div>
+    <p class="shortcut-desc">BLK, SAE, budidaya perikanan, perpustakaan, tempat ibadah, dan fasilitas kunjungan terpadu.</p>
+    <div class="shortcut-more">Lihat semua fasilitas →</div>
+  </a>
+  <a href="berita.html" class="shortcut-card stagger-card">
+    <div class="shortcut-emoji">📰</div>
+    <div class="shortcut-num">Informasi Terkini</div>
+    <div class="shortcut-title">Berita & Pengumuman</div>
+    <p class="shortcut-desc">Update terbaru kegiatan, kerjasama, dan pengumuman resmi Lapas Narkotika Jakarta.</p>
+    <div class="shortcut-more">Lihat semua berita →</div>
+  </a>
+</div>
 </section>
 
 <!-- ========== KONTAK ========== -->
@@ -547,7 +611,7 @@
           <textarea id="fPesan" class="form-textarea" placeholder="Tuliskan pesan atau pertanyaan Anda di sini..."></textarea>
         </div>
         <div class="btn-kirim-wrap">
-          <button id="btnKirim" class="btn-kirim" onclick="kirimPesan()">Kirim Pesan</button>
+          <button id="btnKirim" class="btn-kirim ripple-btn" onclick="kirimPesan()">Kirim Pesan</button>
           <span class="btn-kirim-note">Respons dalam<br>1–2 hari kerja</span>
         </div>
       </div>
@@ -701,6 +765,333 @@
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav ul a');
   window.addEventListener('scroll', ()=>{ let current=''; sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120) current=s.id;}); navLinks.forEach(a=>{const active=a.getAttribute('href')==='#'+current; a.style.color=active?'var(--gold-light)':''; a.style.opacity=active?'1':''; }); });
+
+  // ===== TYPEWRITER ANIMATION =====
+const twWords = ['LAPAS', 'NARKOTIKA', 'JAKARTA'];
+const twIds   = ['tw1', 'tw2', 'tw3'];
+const twDelay = [300, 0, 0];   // delay awal sebelum mulai ngetik (ms)
+const twSpeed = 90;            // ms per karakter
+
+let twObserver = null;
+let twRunning  = false;
+
+function resetTypewriter() {
+  twIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = '';
+    el.style.width  = '0';
+    el.classList.remove('typing', 'done');
+  });
+  twRunning = false;
+}
+
+function typeWord(index) {
+  if (index >= twIds.length) { twRunning = false; return; }
+  const el   = document.getElementById(twIds[index]);
+  const word = twWords[index];
+  if (!el) { typeWord(index + 1); return; }
+
+  el.textContent = '';
+  el.style.width = '0';
+  el.classList.add('typing');
+  el.classList.remove('done');
+
+  let i = 0;
+  const gap = index === 0 ? twDelay[0] : 200; // jeda antar baris
+
+  setTimeout(() => {
+    const iv = setInterval(() => {
+      if (i < word.length) {
+        el.textContent += word[i];
+        el.style.width = 'auto';
+        i++;
+      } else {
+        clearInterval(iv);
+        el.classList.remove('typing');
+        el.classList.add('done');
+        typeWord(index + 1);
+      }
+    }, twSpeed);
+  }, gap);
+}
+
+function startTypewriter() {
+  if (twRunning) return;
+  twRunning = true;
+  resetTypewriter();
+  setTimeout(() => typeWord(0), 150);
+}
+
+// Observer: nyala tiap kali h1 masuk viewport
+window.addEventListener('DOMContentLoaded', () => {
+  const h1 = document.querySelector('#hero h1');
+  if (!h1) return;
+
+  twObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startTypewriter();
+      } else {
+        resetTypewriter();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  twObserver.observe(h1);
+});
+
+// ===== COUNTER ANIMATION =====
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const startTime = performance.now();
+
+  function easeOut(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function update(now) {
+    const elapsed  = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const current  = Math.round(easeOut(progress) * target);
+    el.textContent = current.toLocaleString('id-ID') + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+
+  requestAnimationFrame(update);
+}
+
+// Observer buat trigger counter saat stat bar masuk viewport
+const statBar = document.querySelector('.hero-stats-bar');
+if (statBar) {
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+          el.textContent = '0';
+          animateCounter(el);
+        });
+        counterObserver.unobserve(statBar); // cukup sekali
+      }
+    });
+  }, { threshold: 0.6 });
+  counterObserver.observe(statBar);
+}
+
+// ===== PARALLAX SCROLL =====
+const heroBg     = document.querySelector('.hero-bg');
+const heroBgGrid = document.querySelector('.hero-bg-grid');
+
+function updateParallax() {
+  const scrollY = window.scrollY;
+  const speed1  = scrollY * 0.35;  // layer belakang
+  const speed2  = scrollY * 0.18;  // grid sedikit lebih lambat
+
+  if (heroBg)     heroBg.style.transform     = `translateY(${speed1}px)`;
+  if (heroBgGrid) heroBgGrid.style.transform = `translateY(${speed2}px)`;
+}
+
+window.addEventListener('scroll', updateParallax, { passive: true });
+
+// ===== GOLD PARTICLE SYSTEM =====
+(function() {
+  const canvas  = document.getElementById('particleCanvas');
+  const wrap    = document.querySelector('.coin-flip-wrap');
+  if (!canvas || !wrap) return;
+
+  const ctx     = canvas.getContext('2d');
+  let particles = [];
+  let animId    = null;
+  let isHovered = false;
+
+  const COLORS = [
+    '#f5c800', '#d4a017', '#ffe566', '#ffd700', '#fff0a0', '#e8b800'
+  ];
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width  = rect.width  + 120;
+    canvas.height = rect.height + 120;
+  }
+
+  class Particle {
+    constructor() { this.reset(true); }
+
+    reset(initial = false) {
+      // Spawn dari lingkaran tepi coin
+      const angle  = Math.random() * Math.PI * 2;
+      const radius = 148 + Math.random() * 10;
+      const cx     = canvas.width  / 2;
+      const cy     = canvas.height / 2;
+
+      this.x    = cx + Math.cos(angle) * radius;
+      this.y    = cy + Math.sin(angle) * radius;
+
+      const speed = 0.6 + Math.random() * 2.2;
+      const spread = angle + (Math.random() - 0.5) * 1.1;
+      this.vx   = Math.cos(spread) * speed;
+      this.vy   = Math.sin(spread) * speed - 0.4;
+
+      this.size   = 2 + Math.random() * 3.5;
+      this.color  = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.alpha  = initial ? Math.random() : 0;
+      this.life   = initial ? Math.random() : 0;
+      this.maxLife = 55 + Math.random() * 60;
+      this.gravity = 0.035 + Math.random() * 0.025;
+      this.shape  = Math.random() > 0.5 ? 'circle' : 'diamond';
+      this.rot    = Math.random() * Math.PI * 2;
+      this.rotV   = (Math.random() - 0.5) * 0.12;
+    }
+
+    update() {
+      this.life++;
+      this.vy += this.gravity;
+      this.x  += this.vx;
+      this.y  += this.vy;
+      this.rot += this.rotV;
+      this.vx *= 0.99;
+
+      const t = this.life / this.maxLife;
+      // Fade in cepat, fade out pelan
+      this.alpha = t < 0.15
+        ? t / 0.15
+        : 1 - ((t - 0.15) / 0.85);
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, this.alpha) * 0.92;
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rot);
+      ctx.fillStyle = this.color;
+
+      if (this.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Diamond
+        const s = this.size * 1.3;
+        ctx.beginPath();
+        ctx.moveTo(0, -s);
+        ctx.lineTo(s * 0.6, 0);
+        ctx.lineTo(0, s);
+        ctx.lineTo(-s * 0.6, 0);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Kilap kecil di tengah particle
+      ctx.globalAlpha *= 0.5;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(-this.size * 0.25, -this.size * 0.25, this.size * 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    isDead() { return this.life >= this.maxLife; }
+  }
+
+  function spawnBurst(count) {
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Spawn terus selama hover
+    if (isHovered && particles.length < 80) {
+      spawnBurst(3);
+    }
+
+    particles = particles.filter(p => !p.isDead());
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    if (particles.length > 0 || isHovered) {
+      animId = requestAnimationFrame(loop);
+    } else {
+      animId = null;
+    }
+  }
+
+  function startLoop() {
+    if (!animId) animId = requestAnimationFrame(loop);
+  }
+
+  wrap.addEventListener('mouseenter', () => {
+    isHovered = true;
+    canvas.style.opacity = '1';
+    spawnBurst(18); // ledakan awal
+    startLoop();
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    isHovered = false;
+    canvas.style.opacity = '0';
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+})();
+
+// ===== SCROLL PROGRESS BAR =====
+const progressBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  if (!progressBar) return;
+  const scrollTop  = window.scrollY;
+  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+  const pct        = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}, { passive: true });
+
+// ===== STAGGERED CARD REVEAL =====
+const staggerCards = document.querySelectorAll('.stagger-card');
+if (staggerCards.length) {
+  const staggerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const cards = entry.target
+          .closest('.shortcut-grid')
+          .querySelectorAll('.stagger-card');
+        cards.forEach((card, i) => {
+          setTimeout(() => {
+            card.classList.add('stagger-visible');
+          }, i * 160); // delay 160ms antar card
+        });
+        staggerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  // Observe card pertama aja sebagai trigger
+  staggerObserver.observe(staggerCards[0]);
+}
+
+// ===== RIPPLE EFFECT =====
+document.querySelectorAll('.ripple-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const existing = this.querySelector('.ripple-wave');
+    if (existing) existing.remove();
+
+    const rect   = this.getBoundingClientRect();
+    const size   = Math.max(rect.width, rect.height);
+    const x      = e.clientX - rect.left - size / 2;
+    const y      = e.clientY - rect.top  - size / 2;
+
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple-wave');
+    ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;`;
+    this.appendChild(ripple);
+
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
 </script>
 </body>
 </html>
