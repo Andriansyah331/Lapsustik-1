@@ -6,10 +6,8 @@
   <title>Lapas Narkotika Jakarta</title>
   <link rel="shortcut icon" href="image/logo-remove.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- ✅ FIX 1: EmailJS dimuat di <head> agar tersedia sebelum script inline -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       --navy:        #0d1b3e;
@@ -41,48 +39,17 @@
     nav ul { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
     nav ul a { text-decoration: none; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
     nav ul a:hover { opacity: 1; color: var(--gold-light); }
-
-    .nav-hamburger {
-      display: none;
-      flex-direction: column; justify-content: center; align-items: center;
-      gap: 5px; width: 36px; height: 36px; cursor: pointer;
-      background: none; border: none; padding: 4px;
-    }
-    .nav-hamburger span {
-      display: block; width: 22px; height: 2px;
-      background: var(--gold-light); border-radius: 2px;
-      transition: transform 0.25s, opacity 0.25s;
-    }
+    .nav-hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gold-light); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    .mobile-menu {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99;
-      background: rgba(13,27,62,0.98);
-      padding: 5.5rem 2rem 2rem;
-      flex-direction: column; gap: 0;
-      overflow-y: auto;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-    }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99; background: rgba(13,27,62,0.98); padding: 5.5rem 2rem 2rem; flex-direction: column; gap: 0; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
     .mobile-menu.open { transform: translateX(0); }
-    .mobile-menu a {
-      display: block; padding: 1rem 0;
-      text-decoration: none; color: var(--white);
-      font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400;
-      border-bottom: 1px solid rgba(212,160,23,0.1);
-      transition: color 0.2s;
-    }
+    .mobile-menu a { display: block; padding: 1rem 0; text-decoration: none; color: var(--white); font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; border-bottom: 1px solid rgba(212,160,23,0.1); transition: color 0.2s; }
     .mobile-menu a:hover, .mobile-menu a.active-page { color: var(--gold-light); }
-    .mobile-menu .mobile-section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.7;
-      text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.3rem;
-    }
+    .mobile-menu .mobile-section-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.7; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.3rem; }
     .mobile-menu a.sub { padding-left: 1rem; font-size: 0.95rem; opacity: 0.8; }
-
     .nav-dropdown { position: relative; }
     .nav-drop-btn { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: var(--white); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; opacity: 0.65; background: none; border: none; padding: 0.4rem 0; font-family: inherit; transition: opacity 0.2s, color 0.2s; }
     .nav-dropdown:hover .nav-drop-btn { opacity: 1; color: var(--gold-light); }
@@ -100,11 +67,7 @@
     .drop-item:hover .drop-item-text { opacity: 1; color: var(--gold-light); }
 
     /* ===== HERO ===== */
-    #hero {
-      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; padding: 0 3.5rem; padding-top: 80px;
-      position: relative; overflow: hidden;
-    }
+    #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 3.5rem; padding-top: 80px; position: relative; overflow: hidden; }
     .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 70% at 75% 50%, rgba(212,160,23,0.09), transparent 65%), radial-gradient(ellipse 50% 60% at 10% 80%, rgba(30,47,94,0.7), transparent 70%); }
     .hero-bg-grid { position: absolute; inset: 0; z-index: 0; background-image: repeating-linear-gradient(90deg, rgba(212,160,23,0.035) 0, rgba(212,160,23,0.035) 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, rgba(212,160,23,0.035) 0, rgba(212,160,23,0.035) 1px, transparent 1px, transparent 80px); }
     .hero-content { position: relative; z-index: 1; }
@@ -156,35 +119,60 @@
 
     /* ===== KONTAK ===== */
     #kontak { background: var(--navy); }
-    .kontak-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
-    .kontak-info-list { display: flex; flex-direction: column; gap: 2rem; }
-    .kontak-info-item { display: flex; gap: 1.5rem; align-items: flex-start; }
-    .kontak-info-icon { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--gold-border); background: var(--gold-muted); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-    .kontak-info-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.3rem; }
-    .kontak-info-value { font-size: 0.9rem; line-height: 1.6; opacity: 0.72; }
+    .kontak-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+    /* Kiri: info + sosmed */
+    .kontak-left { display: flex; flex-direction: column; gap: 0; }
+    .kontak-desc { margin-bottom: 2rem; opacity: 0.62; font-size: 0.95rem; line-height: 1.75; }
+
+    /* Info items */
+    .kontak-info-list { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .kontak-info-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .kontak-info-icon { width: 40px; height: 40px; flex-shrink: 0; border: 1px solid var(--gold-border); background: var(--gold-muted); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .kontak-info-label { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.25rem; text-transform: uppercase; }
+    .kontak-info-value { font-size: 0.88rem; line-height: 1.6; opacity: 0.72; }
+
+    /* Sosmed */
+    .sosmed-label { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.6rem; }
+    .sosmed-label::before { content:''; width:16px; height:1px; background:var(--gold); opacity:0.5; }
+    .sosmed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .sosmed-item { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; background: var(--navy-card); border: 1px solid var(--gold-border); padding: 0.65rem 0.9rem; transition: border-color 0.2s, background 0.2s; }
+    .sosmed-item:hover { border-color: var(--gold); background: var(--navy-light); }
+    .sosmed-icon { width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; background: var(--gold-muted); border: 1px solid var(--gold-border); }
+    .sosmed-platform { font-family: 'Space Mono', monospace; font-size: 0.52rem; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.15rem; }
+    .sosmed-handle { font-size: 0.78rem; opacity: 0.65; color: var(--white); }
+
+    /* Kanan: form */
+    .kontak-right { display: flex; flex-direction: column; }
+    .kontak-form-desc { margin-bottom: 1.5rem; opacity: 0.55; font-size: 0.88rem; line-height: 1.75; }
     .kontak-form { display: flex; flex-direction: column; gap: 1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; color: var(--gold); opacity: 0.7; text-transform: uppercase; }
+    .form-label { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; color: var(--gold); opacity: 0.75; text-transform: uppercase; }
     .form-input, .form-textarea { background: var(--navy-card); border: 1px solid rgba(240,237,228,0.08); color: var(--white); padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; width: 100%; }
     .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
-    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-textarea { resize: vertical; min-height: 130px; }
     .form-input::placeholder, .form-textarea::placeholder { opacity: 0.3; }
-    .kontak-toast {
-      display: none;
-      padding: 0.9rem 1.2rem;
-      margin-bottom: 1.4rem;
-      font-size: 0.82rem;
-      line-height: 1.6;
-      border-left: 3px solid var(--gold);
-      background: var(--navy-card);
-      border: 1px solid var(--gold-border);
-      border-left-width: 3px;
-      transition: opacity 0.3s;
-    }
+
+    /* Toast */
+    .kontak-toast { display: none; padding: 0.85rem 1.1rem; margin-bottom: 1.2rem; font-size: 0.82rem; line-height: 1.6; background: var(--navy-card); border: 1px solid var(--gold-border); border-left: 3px solid var(--gold); }
     .kontak-toast.sukses { border-left-color: #4caf82; color: #a8f0c8; }
     .kontak-toast.error  { border-left-color: #e05c5c; color: #f5a0a0; }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Tombol kirim — tidak full width, align kiri */
+    .btn-kirim-wrap { display: flex; align-items: center; gap: 1.2rem; margin-top: 0.4rem; }
+    .btn-kirim {
+      background: var(--gold); color: var(--navy);
+      padding: 0.85rem 2.4rem; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+      flex-shrink: 0;
+    }
+    .btn-kirim:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-kirim:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-kirim-note { font-family: 'Space Mono', monospace; font-size: 0.58rem; opacity: 0.35; line-height: 1.6; }
 
     /* ===== FOOTER ===== */
     footer { background: var(--navy-card); border-top: 1px solid var(--gold-border); padding: 2.5rem 3.5rem; }
@@ -233,9 +221,10 @@
       section { padding: 4rem 1.5rem; }
       #highlights { padding: 4rem 1.5rem; }
       .shortcut-grid { grid-template-columns: 1fr; }
-      .shortcut-card { border-bottom: 1px solid rgba(212,160,23,0.08); border-bottom-width: 0; border-left: 3px solid transparent; padding: 1.8rem 1.4rem; }
-      .shortcut-card:hover { border-left-color: var(--gold); border-bottom-color: transparent; }
-      .kontak-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .shortcut-card { border-bottom: 0; border-left: 3px solid transparent; padding: 1.8rem 1.4rem; }
+      .shortcut-card:hover { border-left-color: var(--gold); }
+      .kontak-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+      .sosmed-grid { grid-template-columns: 1fr 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .modal-features { grid-template-columns: 1fr; }
       footer { padding: 2rem 1.5rem; }
@@ -251,10 +240,9 @@
       .nav-title { font-size: 0.6rem; }
       #hero { padding: 5rem 1rem 2.5rem; }
       h1 { font-size: clamp(2.8rem, 11vw, 4rem); }
-      .hero-tagline { font-size: 0.55rem; letter-spacing: 0.14em; }
+      .hero-tagline { font-size: 0.55rem; }
       .hero-badge { font-size: 0.52rem; padding: 0.35rem 0.8rem; margin-bottom: 1.4rem; }
       .hero-sub { font-size: 0.9rem; }
-      .hero-cta { gap: 0.8rem; }
       .btn-primary, .btn-outline { padding: 0.8rem 1.6rem; font-size: 0.75rem; }
       .hero-stats-bar { gap: 0; margin-top: 2rem; }
       .stat-num { font-size: 1.6rem; }
@@ -262,9 +250,8 @@
       section { padding: 3rem 1rem; }
       #highlights { padding: 3rem 1rem; }
       h2 { font-size: clamp(2rem, 7vw, 3rem); }
-      .kontak-info-item { gap: 1rem; }
-      .kontak-info-icon { width: 38px; height: 38px; font-size: 1rem; }
-      .kontak-info-value { font-size: 0.85rem; }
+      .sosmed-grid { grid-template-columns: 1fr; }
+      .btn-kirim-wrap { flex-direction: column; align-items: flex-start; }
       .modal-overlay { padding: 0.5rem; }
       .modal { max-height: 95vh; }
       .modal-title { font-size: 1.8rem; }
@@ -396,37 +383,104 @@
   <div class="section-tag">Hubungi Kami</div>
   <h2>Informasi <em>Kontak</em></h2>
   <div class="section-divider"></div>
+
   <div class="kontak-wrapper reveal">
-    <div>
-      <div style="margin-bottom:2rem;opacity:0.62;font-size:0.95rem;line-height:1.75;">Lapas Narkotika Kelas IIA Jakarta membuka layanan informasi bagi keluarga warga binaan dan masyarakat umum setiap hari kerja.</div>
+
+    <!-- ===== KIRI: Info + Sosmed ===== -->
+    <div class="kontak-left">
+      <p class="kontak-desc">Lapas Narkotika Kelas IIA Jakarta membuka layanan informasi bagi keluarga warga binaan dan masyarakat umum setiap hari kerja.</p>
+
+      <!-- Info kontak dulu -->
       <div class="kontak-info-list">
         <div class="kontak-info-item">
           <div class="kontak-info-icon">📍</div>
-          <div><div class="kontak-info-label">Alamat</div><div class="kontak-info-value">Jl. Bekasi Tim. Raya No.170A, Cipinang Besar Utara, Kecamatan Jatinegara, Jakarta Timur, DKI Jakarta 13410</div></div>
+          <div>
+            <div class="kontak-info-label">Alamat</div>
+            <div class="kontak-info-value">Jl. Bekasi Tim. Raya No.170A, Cipinang Besar Utara, Kecamatan Jatinegara, Jakarta Timur, DKI Jakarta 13410</div>
+          </div>
         </div>
         <div class="kontak-info-item">
           <div class="kontak-info-icon">📞</div>
-          <div><div class="kontak-info-label">Telepon</div><div class="kontak-info-value">(021) 85910104<br>Senin – Jumat: 08.00 – 16.00 WIB</div></div>
+          <div>
+            <div class="kontak-info-label">Telepon</div>
+            <div class="kontak-info-value">(021) 85910104<br>Senin – Jumat: 08.00 – 16.00 WIB</div>
+          </div>
         </div>
         <div class="kontak-info-item">
           <div class="kontak-info-icon">✉️</div>
-          <div><div class="kontak-info-label">Email</div><div class="kontak-info-value">lapas.narkotika.jakarta@imipas.go.id</div></div>
+          <div>
+            <div class="kontak-info-label">Email</div>
+            <div class="kontak-info-value">lapas.narkotika.jakarta@imipas.go.id</div>
+          </div>
         </div>
         <div class="kontak-info-item">
           <div class="kontak-info-icon">🕐</div>
           <div>
             <div class="kontak-info-label">Jam Kunjungan</div>
-            <div class="kontak-info-value">Senin s.d Kamis<br>Sesi Pagi: 09.00 – 11.00 WIB<br>Sesi Siang: 13.30 – 14.45 WIB<br><small style="opacity:0.45;font-size:0.8rem;">Pendaftaran paling lambat 30 menit sebelum jadwal</small></div>
+            <div class="kontak-info-value">
+              Senin s.d Kamis<br>
+              Sesi Pagi: 09.00 – 11.00 WIB<br>
+              Sesi Siang: 13.30 – 14.45 WIB<br>
+              <small style="opacity:0.4;font-size:0.78rem;">Pendaftaran paling lambat 30 menit sebelum jadwal</small>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div style="margin-bottom:1.5rem;opacity:0.58;font-size:0.88rem;line-height:1.75;">
-        Sampaikan pertanyaan atau permohonan informasi melalui formulir berikut. Tim kami akan merespons dalam 1–2 hari kerja.
-      </div>
 
-      <!-- Toast notifikasi -->
+      <!-- Sosmed di bawah info kontak -->
+      <div class="sosmed-label">Ikuti Kami</div>
+      <div class="sosmed-grid">
+        <a href="https://instagram.com/lapasnarkotikajkt" target="_blank" rel="noopener" class="sosmed-item">
+          <div class="sosmed-icon">
+            <div class="sosmed-icon">
+  <i class="fa-brands fa-instagram" style="font-size:1.3rem; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+</div>
+          </div>
+          <div>
+            <div class="sosmed-platform">Instagram</div>
+            <div class="sosmed-handle">@lapasnarkotikajkt</div>
+          </div>
+        </a>
+        <a href="https://twitter.com/lpnarkotikajkt" target="_blank" rel="noopener" class="sosmed-item">
+          <div class="sosmed-icon">
+            <div class="sosmed-icon">
+  <i class="fa-brands fa-x-twitter" style="font-size:1.3rem; color:#ffffff;"></i>
+</div>
+          </div>
+          <div>
+            <div class="sosmed-platform">X / Twitter</div>
+            <div class="sosmed-handle">@lpnarkotikajkt</div>
+          </div>
+        </a>
+        <a href="https://www.youtube.com/@lapasnarkotikaklasiiajakarta" target="_blank" rel="noopener" class="sosmed-item">
+          <div class="sosmed-icon">
+            <div class="sosmed-icon">
+  <i class="fa-brands fa-youtube" style="font-size:1.3rem; color:#FF0000;"></i>
+</div>
+          </div>
+          <div>
+            <div class="sosmed-platform">YouTube</div>
+            <div class="sosmed-handle">Lapas Narkotika Jakarta</div>
+          </div>
+        </a>
+        <a href="https://facebook.com/lapasnarkotikajakarta" target="_blank" rel="noopener" class="sosmed-item">
+          <div class="sosmed-icon">
+            <div class="sosmed-icon">
+  <i class="fa-brands fa-facebook" style="font-size:1.3rem; color:#1877F2;"></i>
+</div>
+          </div>
+          <div>
+            <div class="sosmed-platform">Facebook</div>
+            <div class="sosmed-handle">Lapas Narkotika Jakarta</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== KANAN: Form ===== -->
+    <div class="kontak-right">
+      <p class="kontak-form-desc">Sampaikan pertanyaan atau permohonan informasi melalui formulir berikut. Tim kami akan merespons dalam 1–2 hari kerja.</p>
+
       <div id="kontakToast" class="kontak-toast"></div>
 
       <div class="kontak-form">
@@ -440,12 +494,10 @@
             <input id="fTelp" class="form-input" type="tel" placeholder="08xx-xxxx-xxxx" />
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label">Email</label>
           <input id="fEmail" class="form-input" type="email" placeholder="email@anda.com" />
         </div>
-
         <div class="form-group">
           <label class="form-label">Keperluan</label>
           <select id="fKeperluan" class="form-input" style="cursor:pointer">
@@ -458,18 +510,17 @@
             <option>Lainnya</option>
           </select>
         </div>
-
         <div class="form-group">
           <label class="form-label">Pesan</label>
           <textarea id="fPesan" class="form-textarea" placeholder="Tuliskan pesan atau pertanyaan Anda di sini..."></textarea>
         </div>
-
-        <button id="btnKirim" class="btn-primary" onclick="kirimPesan()"
-                style="width:100%;text-align:center;padding:1rem;">
-          Kirim Pesan
-        </button>
+        <div class="btn-kirim-wrap">
+          <button id="btnKirim" class="btn-kirim" onclick="kirimPesan()">Kirim Pesan</button>
+          <span class="btn-kirim-note">Respons dalam<br>1–2 hari kerja</span>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -509,7 +560,6 @@
 </div>
 
 <script>
-  /* ---- Mobile Menu ---- */
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
@@ -525,22 +575,11 @@
     });
   });
 
-  /* ============================================================
-     ✅ FIX 2: Konfigurasi EmailJS
-     Ganti nilai di bawah sesuai dashboard EmailJS kamu
-  ============================================================ */
-  const EJS_PUBLIC_KEY  = 'oprveIC_938tf2iwb';   // Account → Public Key
-  const EJS_SERVICE_ID  = 'service_51jko96';     // Email Services → Service ID
-  const EJS_TEMPLATE_ID = 'template_opci7su';    // Email Templates → Template ID
-
-  // Inisialisasi EmailJS
+  const EJS_PUBLIC_KEY  = 'oprveIC_938tf2iwb';
+  const EJS_SERVICE_ID  = 'service_51jko96';
+  const EJS_TEMPLATE_ID = 'template_opci7su';
   emailjs.init({ publicKey: EJS_PUBLIC_KEY });
 
-  /* ============================================================
-     ✅ FIX 3: Fungsi kirimPesan — variabel diselaraskan dengan
-     template EmailJS: {{name}}, {{telp}}, {{email}},
-     {{keperluan}}, {{message}}, {{time}}
-  ============================================================ */
   async function kirimPesan() {
     const nama      = document.getElementById('fNama').value.trim();
     const telp      = document.getElementById('fTelp').value.trim();
@@ -549,7 +588,6 @@
     const pesan     = document.getElementById('fPesan').value.trim();
     const btn       = document.getElementById('btnKirim');
 
-    // Validasi
     if (!nama || !email || !keperluan || !pesan) {
       tampilToast('Mohon lengkapi semua field yang wajib diisi (Nama, Email, Keperluan, dan Pesan).', 'error');
       return;
@@ -559,7 +597,6 @@
       return;
     }
 
-    // ✅ FIX: Generate timestamp sebelum dikirim
     const time = new Date().toLocaleString('id-ID', {
       weekday: 'long', year: 'numeric', month: 'long',
       day: 'numeric', hour: '2-digit', minute: '2-digit'
@@ -569,19 +606,16 @@
     btn.textContent = 'Mengirim...';
 
     try {
-      // ✅ FIX: Nama variabel disesuaikan dengan {{...}} di template EmailJS
       await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
-        name:      nama,          // → {{name}}
-        telp:      telp || '-',   // → {{telp}}
-        email:     email,         // → {{email}}
-        keperluan: keperluan,     // → {{keperluan}}
-        message:   pesan,         // → {{message}}
-        time:      time,          // → {{time}}
+        name:      nama,
+        telp:      telp || '-',
+        email:     email,
+        keperluan: keperluan,
+        message:   pesan,
+        time:      time,
       });
-
       tampilToast('✓ Pesan Anda berhasil dikirim! Tim kami akan merespons dalam 1–2 hari kerja.', 'sukses');
       resetForm();
-
     } catch (err) {
       console.error('EmailJS error:', err);
       tampilToast('Gagal mengirim pesan. Silakan coba lagi atau hubungi kami langsung.', 'error');
@@ -592,64 +626,27 @@
   }
 
   function resetForm() {
-    ['fNama','fTelp','fEmail','fPesan'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
+    ['fNama','fTelp','fEmail','fPesan'].forEach(id => { document.getElementById(id).value = ''; });
     document.getElementById('fKeperluan').selectedIndex = 0;
   }
 
   function tampilToast(msg, tipe = 'sukses') {
     const t = document.getElementById('kontakToast');
-    t.textContent   = msg;
-    t.className     = `kontak-toast ${tipe}`;
+    t.textContent = msg;
+    t.className = `kontak-toast ${tipe}`;
     t.style.display = 'block';
-    if (tipe === 'error') {
-      setTimeout(() => { t.style.display = 'none'; }, 6000);
-    }
+    if (tipe === 'error') setTimeout(() => { t.style.display = 'none'; }, 6000);
   }
 
-  /* ---- Modal Data ---- */
   const programs = {
-    rehabilitasi: {
-      tag: '01 — Rehabilitasi Medis', title: 'Rehabilitasi Narkotika', icon: '🏥', color: '#0e2a38',
-      desc: 'Program Rehabilitasi Narkotika adalah layanan pemulihan fisik dan mental berbasis klinis yang dirancang khusus untuk warga binaan dengan ketergantungan narkotika. Dijalankan oleh tim dokter umum, dokter spesialis jiwa, dan perawat terlatih, program ini mencakup seluruh fase pemulihan dari detoksifikasi hingga stabilisasi kondisi kesehatan jangka panjang.',
-      features: [{icon:'💉',text:'Detoksifikasi medis terstruktur dan terawasi'},{icon:'🩺',text:'Pemeriksaan kesehatan komprehensif rutin'},{icon:'💊',text:'Terapi substitusi opioid (Metadon/Buprenorfin)'},{icon:'🧬',text:'Penanganan penyakit penyerta (HIV, Hepatitis)'},{icon:'🏨',text:'Unit rawat inap khusus pasca-detoksifikasi'},{icon:'📋',text:'Rekam medis digital & pemantauan berkelanjutan'}]
-    },
-    kepribadian: {
-      tag: '02 — Pembinaan Kepribadian', title: 'Pembinaan Kepribadian', icon: '🧠', color: '#0e1a38',
-      desc: 'Program Pembinaan Kepribadian berfokus pada pembentukan karakter, mental, dan moral warga binaan sebagai pondasi perubahan hidup jangka panjang.',
-      features: [{icon:'🗣️',text:'Konseling individual dan kelompok rutin'},{icon:'📓',text:'Modul pembentukan karakter dan disiplin diri'},{icon:'🎭',text:'Terapi ekspresif: seni, drama, dan musik'},{icon:'🧩',text:'Program Cognitive Behavioral Therapy (CBT)'},{icon:'👥',text:'Kelompok dukungan sebaya (peer support group)'},{icon:'📊',text:'Asesmen psikologis berkala & laporan perkembangan'}]
-    },
-    blk: {
-      tag: '03 — Vokasional', title: 'Balai Latihan Kerja', icon: '🔧', color: '#1a1208',
-      desc: 'Program Balai Latihan Kerja (BLK) membekali warga binaan dengan keterampilan teknis yang relevan dengan kebutuhan pasar kerja saat ini.',
-      features: [{icon:'🧵',text:'Menjahit & tata busana bersertifikat'},{icon:'👨‍🍳',text:'Tata boga, memasak, & pastri profesional'},{icon:'🪚',text:'Pertukangan kayu & konstruksi bangunan ringan'},{icon:'🌱',text:'Budidaya pertanian & akuakultur hidroponik'},{icon:'🖥️',text:'Desain grafis, office, & produktivitas digital'},{icon:'🎨',text:'Kerajinan tangan & seni kriya bernilai jual'}]
-    },
-    sertifikasi: {
-      tag: '04 — Pelatihan Bersertifikat', title: 'Pelatihan Bersertifikat', icon: '📜', color: '#1a1208',
-      desc: 'Program Pelatihan Bersertifikat bekerja sama langsung dengan lembaga sertifikasi nasional untuk memastikan setiap warga binaan mendapatkan pengakuan kompetensi resmi.',
-      features: [{icon:'🏅',text:'Sertifikat kompetensi resmi BNSP yang diakui nasional'},{icon:'🤝',text:'Kerjasama dengan 12+ lembaga sertifikasi profesi'},{icon:'📝',text:'Ujian kompetensi terstandarisasi & terstruktur'},{icon:'💼',text:'Pembekalan portofolio kerja & CV profesional'},{icon:'🔗',text:'Jaringan mitra perusahaan untuk penyerapan tenaga kerja'},{icon:'🔄',text:'Program re-sertifikasi dan peningkatan level kompetensi'}]
-    },
-    pkbm: {
-      tag: '05 — Pendidikan', title: 'PKBM', icon: '📖', color: '#0e2830',
-      desc: 'Program Pusat Kegiatan Belajar Masyarakat (PKBM) memastikan setiap warga binaan memiliki bekal akademis yang memadai.',
-      features: [{icon:'📚',text:'Kesetaraan Paket A (SD), B (SMP), C (SMA)'},{icon:'✏️',text:'Literasi dasar & numerasi untuk WBP buta huruf'},{icon:'🎓',text:'Bimbingan belajar Ujian Kesetaraan Nasional'},{icon:'💻',text:'Literasi digital dan kecakapan teknologi informasi'},{icon:'📰',text:'Perpustakaan dengan koleksi 2.000+ judul buku'},{icon:'🏫',text:'Kerjasama dengan universitas untuk program beasiswa'}]
-    },
-    hipnoterapi: {
-      tag: '06 — Pembinaan Intelektual', title: 'Hypnotherapy & Pembinaan Intelektual', icon: '💡', color: '#0e0e30',
-      desc: 'Program Hypnotherapy dan Pembinaan Intelektual merupakan pendekatan inovatif dalam pengembangan mental warga binaan.',
-      features: [{icon:'🧘',text:'Sesi hypnotherapy individual oleh terapis bersertifikat'},{icon:'💪',text:'Pelatihan motivasi & pembangunan kepercayaan diri'},{icon:'🧠',text:'Teknik mindfulness dan manajemen stres'},{icon:'📖',text:'Program literasi emosional & kecerdasan sosial'},{icon:'🎯',text:'Penetapan tujuan hidup & perencanaan masa depan'},{icon:'🌟',text:'Seminar pengembangan diri dengan pembicara inspiratif'}]
-    },
-    usaha: {
-      tag: '07 — Kemandirian Usaha', title: 'Kemandirian Usaha', icon: '🌱', color: '#0a2010',
-      desc: 'Program Kemandirian Usaha dirancang untuk membekali warga binaan dengan kemampuan berwirausaha secara mandiri setelah bebas.',
-      features: [{icon:'🥖',text:'Pelatihan bakery & usaha kuliner skala rumahan'},{icon:'👗',text:'Usaha konveksi & tata busana siap jual'},{icon:'🎪',text:'Kerajinan tangan & produk kreatif bernilai ekspor'},{icon:'🐔',text:'Budidaya ayam petelur & pertanian produktif'},{icon:'📱',text:'Pemasaran digital & e-commerce untuk UMKM'},{icon:'💰',text:'Literasi keuangan & manajemen usaha kecil'}]
-    },
-    integrasi: {
-      tag: '08 — Reintegrasi Sosial', title: 'Integrasi & Pembebasan Bersyarat', icon: '🤝', color: '#0e0e30',
-      desc: 'Program Integrasi dan Pembebasan Bersyarat mempersiapkan warga binaan untuk kembali ke tengah masyarakat secara mulus dan berkelanjutan.',
-      features: [{icon:'🏠',text:'Program asimilasi kerja & asimilasi sosial bertahap'},{icon:'📅',text:'Cuti menjelang bebas (CMB) & cuti bersyarat terstruktur'},{icon:'📋',text:'Pengurusan administrasi pembebasan bersyarat (PB)'},{icon:'🧭',text:'Pendampingan Balai Pemasyarakatan (BAPAS)'},{icon:'👨‍👩‍👧',text:'Rekonsiliasi keluarga & mediasi komunitas'},{icon:'📱',text:'Pemantauan pasca-bebas via aplikasi digital'}]
-    }
+    rehabilitasi: { tag:'01 — Rehabilitasi Medis', title:'Rehabilitasi Narkotika', icon:'🏥', color:'#0e2a38', desc:'Program Rehabilitasi Narkotika adalah layanan pemulihan fisik dan mental berbasis klinis yang dirancang khusus untuk warga binaan dengan ketergantungan narkotika. Dijalankan oleh tim dokter umum, dokter spesialis jiwa, dan perawat terlatih, program ini mencakup seluruh fase pemulihan dari detoksifikasi hingga stabilisasi kondisi kesehatan jangka panjang.', features:[{icon:'💉',text:'Detoksifikasi medis terstruktur dan terawasi'},{icon:'🩺',text:'Pemeriksaan kesehatan komprehensif rutin'},{icon:'💊',text:'Terapi substitusi opioid (Metadon/Buprenorfin)'},{icon:'🧬',text:'Penanganan penyakit penyerta (HIV, Hepatitis)'},{icon:'🏨',text:'Unit rawat inap khusus pasca-detoksifikasi'},{icon:'📋',text:'Rekam medis digital & pemantauan berkelanjutan'}] },
+    kepribadian: { tag:'02 — Pembinaan Kepribadian', title:'Pembinaan Kepribadian', icon:'🧠', color:'#0e1a38', desc:'Program Pembinaan Kepribadian berfokus pada pembentukan karakter, mental, dan moral warga binaan sebagai pondasi perubahan hidup jangka panjang.', features:[{icon:'🗣️',text:'Konseling individual dan kelompok rutin'},{icon:'📓',text:'Modul pembentukan karakter dan disiplin diri'},{icon:'🎭',text:'Terapi ekspresif: seni, drama, dan musik'},{icon:'🧩',text:'Program Cognitive Behavioral Therapy (CBT)'},{icon:'👥',text:'Kelompok dukungan sebaya (peer support group)'},{icon:'📊',text:'Asesmen psikologis berkala & laporan perkembangan'}] },
+    blk: { tag:'03 — Vokasional', title:'Balai Latihan Kerja', icon:'🔧', color:'#1a1208', desc:'Program Balai Latihan Kerja (BLK) membekali warga binaan dengan keterampilan teknis yang relevan dengan kebutuhan pasar kerja saat ini.', features:[{icon:'🧵',text:'Menjahit & tata busana bersertifikat'},{icon:'👨‍🍳',text:'Tata boga, memasak, & pastri profesional'},{icon:'🪚',text:'Pertukangan kayu & konstruksi bangunan ringan'},{icon:'🌱',text:'Budidaya pertanian & akuakultur hidroponik'},{icon:'🖥️',text:'Desain grafis, office, & produktivitas digital'},{icon:'🎨',text:'Kerajinan tangan & seni kriya bernilai jual'}] },
+    sertifikasi: { tag:'04 — Pelatihan Bersertifikat', title:'Pelatihan Bersertifikat', icon:'📜', color:'#1a1208', desc:'Program Pelatihan Bersertifikat bekerja sama langsung dengan lembaga sertifikasi nasional.', features:[{icon:'🏅',text:'Sertifikat kompetensi resmi BNSP yang diakui nasional'},{icon:'🤝',text:'Kerjasama dengan 12+ lembaga sertifikasi profesi'},{icon:'📝',text:'Ujian kompetensi terstandarisasi & terstruktur'},{icon:'💼',text:'Pembekalan portofolio kerja & CV profesional'},{icon:'🔗',text:'Jaringan mitra perusahaan untuk penyerapan tenaga kerja'},{icon:'🔄',text:'Program re-sertifikasi dan peningkatan level kompetensi'}] },
+    pkbm: { tag:'05 — Pendidikan', title:'PKBM', icon:'📖', color:'#0e2830', desc:'Program Pusat Kegiatan Belajar Masyarakat (PKBM) memastikan setiap warga binaan memiliki bekal akademis yang memadai.', features:[{icon:'📚',text:'Kesetaraan Paket A (SD), B (SMP), C (SMA)'},{icon:'✏️',text:'Literasi dasar & numerasi untuk WBP buta huruf'},{icon:'🎓',text:'Bimbingan belajar Ujian Kesetaraan Nasional'},{icon:'💻',text:'Literasi digital dan kecakapan teknologi informasi'},{icon:'📰',text:'Perpustakaan dengan koleksi 2.000+ judul buku'},{icon:'🏫',text:'Kerjasama dengan universitas untuk program beasiswa'}] },
+    hipnoterapi: { tag:'06 — Pembinaan Intelektual', title:'Hypnotherapy & Pembinaan Intelektual', icon:'💡', color:'#0e0e30', desc:'Program Hypnotherapy dan Pembinaan Intelektual merupakan pendekatan inovatif dalam pengembangan mental warga binaan.', features:[{icon:'🧘',text:'Sesi hypnotherapy individual oleh terapis bersertifikat'},{icon:'💪',text:'Pelatihan motivasi & pembangunan kepercayaan diri'},{icon:'🧠',text:'Teknik mindfulness dan manajemen stres'},{icon:'📖',text:'Program literasi emosional & kecerdasan sosial'},{icon:'🎯',text:'Penetapan tujuan hidup & perencanaan masa depan'},{icon:'🌟',text:'Seminar pengembangan diri dengan pembicara inspiratif'}] },
+    usaha: { tag:'07 — Kemandirian Usaha', title:'Kemandirian Usaha', icon:'🌱', color:'#0a2010', desc:'Program Kemandirian Usaha dirancang untuk membekali warga binaan dengan kemampuan berwirausaha secara mandiri setelah bebas.', features:[{icon:'🥖',text:'Pelatihan bakery & usaha kuliner skala rumahan'},{icon:'👗',text:'Usaha konveksi & tata busana siap jual'},{icon:'🎪',text:'Kerajinan tangan & produk kreatif bernilai ekspor'},{icon:'🐔',text:'Budidaya ayam petelur & pertanian produktif'},{icon:'📱',text:'Pemasaran digital & e-commerce untuk UMKM'},{icon:'💰',text:'Literasi keuangan & manajemen usaha kecil'}] },
+    integrasi: { tag:'08 — Reintegrasi Sosial', title:'Integrasi & Pembebasan Bersyarat', icon:'🤝', color:'#0e0e30', desc:'Program Integrasi dan Pembebasan Bersyarat mempersiapkan warga binaan untuk kembali ke tengah masyarakat secara mulus dan berkelanjutan.', features:[{icon:'🏠',text:'Program asimilasi kerja & asimilasi sosial bertahap'},{icon:'📅',text:'Cuti menjelang bebas (CMB) & cuti bersyarat terstruktur'},{icon:'📋',text:'Pengurusan administrasi pembebasan bersyarat (PB)'},{icon:'🧭',text:'Pendampingan Balai Pemasyarakatan (BAPAS)'},{icon:'👨‍👩‍👧',text:'Rekonsiliasi keluarga & mediasi komunitas'},{icon:'📱',text:'Pemantauan pasca-bebas via aplikasi digital'}] }
   };
 
   function openModal(id) {
@@ -666,16 +663,13 @@
   function closeModalOutside(e) { if (e.target===document.getElementById('modalOverlay')) closeModal(); }
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
-  /* ---- Scroll Reveal ---- */
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} }); },{threshold:0.08});
   reveals.forEach(r=>io.observe(r));
 
-  /* ---- Active Nav ---- */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav ul a');
   window.addEventListener('scroll', ()=>{ let current=''; sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120) current=s.id;}); navLinks.forEach(a=>{const active=a.getAttribute('href')==='#'+current; a.style.color=active?'var(--gold-light)':''; a.style.opacity=active?'1':''; }); });
 </script>
-
 </body>
 </html>
